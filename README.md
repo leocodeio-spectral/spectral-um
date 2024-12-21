@@ -1,7 +1,7 @@
 NestJs application for user management of spectral
 
---
 
+```bash
 src/
   |_ config/
   |_ core/
@@ -40,3 +40,4 @@ src/
       |_ dependency.excpetion.ts
     |_ services/
     |_ interfaces/
+```
