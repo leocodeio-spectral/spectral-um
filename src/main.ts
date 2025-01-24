@@ -1,69 +1,57 @@
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, VersioningType } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { ResponseInterceptor } from '@leocodeio-njs/njs-response';
 import { AppModule } from './app.module';
-import { ApplicationExceptionFilter } from './common/exception/filters/application.exception.filter';
-import { DomainExceptionFilter } from './common/exception/filters/domain.exception.filter';
-import { DatabaseExceptionFilter } from './common/exception/filters/database.exception.filter';
-import { LoggingInterceptor } from './utils/logging/logging.interceptor';
-import { LoggerService } from './utils/logging/logger.service';
-import { ResponseService } from './common/services/response.service';
+import * as basicAuth from 'express-basic-auth';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
-    bufferLogs: true,
-  });
-
-  // Create and configure services
-  const logger = await app.resolve(LoggerService);
-  const responseService = await app.resolve(ResponseService);
-  
-  app.useLogger(logger);
-
-  // Global interceptors
-  app.useGlobalInterceptors(new LoggingInterceptor(logger));
-
-  // Swagger configuration
-  const config = new DocumentBuilder()
-    .setTitle('Spectral API')
-    .setDescription('The Spectral API description')
-    .setVersion('1.0')
-    .addBearerAuth()
-    .addTag('creators', 'Creator management endpoints')
-    .addTag('editors', 'Editor management endpoints')
-    .addTag('auth', 'Authentication endpoints')
-    .build();
-
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api/docs', app, document, {
-    swaggerOptions: {
-      persistAuthorization: true,
-    },
-    customSiteTitle: 'Spectral API Docs',
-  });
-
-  // Global exception filters with logger and response service
-  app.useGlobalFilters(
-    new ApplicationExceptionFilter(logger, responseService),
-    new DomainExceptionFilter(logger),
-    new DatabaseExceptionFilter(logger),
-  );
-
-  // Global validation pipe
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      transform: true,
-      forbidNonWhitelisted: true,
+  const app = await NestFactory.create(AppModule);
+  const configService = app.get(ConfigService);
+  const swaggerProtection = {
+    route: configService.get('SWAGGER_ROUTE'),
+    password: configService.get('SWAGGER_PASSWORD'),
+  };
+  app.use(
+    [swaggerProtection.route],
+    basicAuth({
+      challenge: true,
+      users: {
+        admin: swaggerProtection.password,
+      },
     }),
   );
 
-  // Enable CORS
-  app.enableCors();
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
+  // [TODO] Add some HTTP filters.
+  // app.useGlobalFilters(new HttpExceptionFilter());
+  app.useGlobalInterceptors(new ResponseInterceptor());
 
-  const port = process.env.PORT || 3000;
-  await app.listen(port);
-  logger.log(`Application is running on: http://localhost:${port}`);
-  logger.log(`Swagger documentation is available at: http://localhost:${port}/api/docs`);
+  app.enableVersioning({
+    type: VersioningType.URI,
+    defaultVersion: configService.get('API_VERSION'),
+    prefix: 'v',
+  });
+
+  const config = new DocumentBuilder()
+    .setTitle(configService.get('APP_NAME'))
+    .setDescription('API for managing users')
+    .setVersion('1.0')
+    .addApiKey(
+      {
+        type: 'apiKey',
+        name: 'x-api-key',
+        in: 'header',
+        description: 'API key for user management',
+      },
+      'x-api-key',
+    )
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup(swaggerProtection.route, app, document);
+  console.log('application running on port', configService.get('PORT'));
+  await app.listen(configService.get('PORT'));
 }
 bootstrap();

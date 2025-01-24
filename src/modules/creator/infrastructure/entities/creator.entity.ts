@@ -1,8 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { CreatorAuditLog } from './creator-audit-log.entity';
-import { CreatorHistory } from './creator-history.entity';
-import { CreatorAccessToken } from './creator-access-token.entity';
-import { CreatorEditorMapping } from './creator-editor-mapping.entity';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 
 @Entity('creator')
@@ -39,16 +35,4 @@ export class Creator {
 
   @Column({ type: 'timestamp', nullable: true })
   updated_at: Date;
-
-  @OneToMany(() => CreatorAuditLog, auditLog => auditLog.creator)
-  audit_logs: CreatorAuditLog[];
-
-  @OneToMany(() => CreatorHistory, history => history.creator)
-  history: CreatorHistory[];
-
-  @OneToMany(() => CreatorAccessToken, accessToken => accessToken.creator)
-  access_tokens: CreatorAccessToken[];
-
-  @OneToMany(() => CreatorEditorMapping, mapping => mapping.creator)
-  editor_mappings: CreatorEditorMapping[];
 } 

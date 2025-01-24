@@ -1,33 +1,51 @@
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { LoggingModule } from '@leocodeio-njs/njs-logging';
+import { HealthModule } from '@leocodeio-njs/njs-health-db';
+import { ApiKeyGuard } from '@leocodeio-njs/njs-auth';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
+import { LoggingInterceptor } from '@leocodeio-njs/njs-logging';
+import { AuthModule } from '@leocodeio-njs/njs-auth';
+import { AppConfigModule } from '@leocodeio-njs/njs-config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { AppConfigService } from '@leocodeio-njs/njs-config';
 import { CreatorModule } from './modules/creator/creator.module';
-import { LoggingModule } from './utils/logging/logging.module';
-import { ResponseService } from './common/services/response.service';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    LoggingModule,
+    HealthModule,
+    AuthModule,
+    AppConfigModule,
+    CreatorModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.DB_HOST || 'localhost',
-      port: parseInt(process.env.DB_PORT) || 5432,
-      username: process.env.DB_USERNAME || 'postgres',
-      password: process.env.DB_PASSWORD || 'postgres',
-      database: process.env.DB_NAME || 'postgres',
-      schema: process.env.DB_SCHEMA || 'spectra',
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: process.env.NODE_ENV !== 'production',
+    TypeOrmModule.forRootAsync({
+      imports: [AppConfigModule],
+      useFactory: (configService: AppConfigService) => ({
+        ...configService.databaseConfig,
+        entities: [__dirname + '/**/*.entity{.ts,.js}'],
+        synchronize: true,
+      }),
+      inject: [AppConfigService],
     }),
-    LoggingModule,
-    CreatorModule,
   ],
   controllers: [AppController],
-  providers: [AppService, ResponseService],
-  exports: [ResponseService],
+  providers: [
+    AppService,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LoggingInterceptor,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ApiKeyGuard,
+    },
+  ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {}
+}
