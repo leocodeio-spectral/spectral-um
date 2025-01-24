@@ -6,22 +6,16 @@ import { Creator } from './infrastructure/entities/creator.entity';
 import { CreatorRepository } from './infrastructure/adapters/creator.repository';
 import { CreatorService } from './application/services/creator.service';
 import { CreatorController } from './presentation/controllers/creator.controller';
-
+import { ICreatorRepository } from './domain/ports/creator.repository';
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Creator]),
-    JwtModule.registerAsync({
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        secret: configService.getOrThrow('JWT_SECRET'),
-        signOptions: {
-          expiresIn: configService.getOrThrow('JWT_EXPIRATION'),
-        },
-      }),
-    }),
-  ],
+  imports: [TypeOrmModule.forFeature([Creator])],
   controllers: [CreatorController],
-  providers: [CreatorService, CreatorRepository],
-  exports: [CreatorService, CreatorRepository],
+  providers: [
+    CreatorService,
+    {
+      provide: ICreatorRepository,
+      useClass: CreatorRepository,
+    },
+  ],
 })
 export class CreatorModule {}

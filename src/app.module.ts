@@ -12,6 +12,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppConfigService } from '@leocodeio-njs/njs-config';
 import { CreatorModule } from './modules/creator/creator.module';
 import { ConfigModule } from '@nestjs/config';
+import { EditorModule } from './modules/editor/editor.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { ConfigModule } from '@nestjs/config';
     AuthModule,
     AppConfigModule,
     CreatorModule,
+    EditorModule,   
     ConfigModule.forRoot({
       isGlobal: true,
     }),

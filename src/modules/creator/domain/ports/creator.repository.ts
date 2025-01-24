@@ -1,1 +1,1 @@
-export interface ICreatorRepository {}
+export abstract class ICreatorRepository {}
