@@ -1,6 +1,5 @@
 NestJs application for user management of spectral
 
-
 ```bash
 src/
   |_ config/
