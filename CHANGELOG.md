@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/leocodeio-spectral/spectral-um/compare/v1.0.1...v1.0.2) (2025-05-06)
+
+
+### Performance Improvements
+
+* **updated codebase:** updated codebase ([4268b90](https://github.com/leocodeio-spectral/spectral-um/commit/4268b900d75b5dab8983c90e286eb1eabcdbfd00))
+
 ## [1.0.1](https://github.com/leocodeio-spectral/spectral-um/compare/v1.0.0...v1.0.1) (2025-04-14)
 
 
