@@ -14,7 +14,7 @@ import { ApiOperation, ApiResponse, ApiSecurity } from '@nestjs/swagger';
 import { Request } from 'express';
 import { LoginDto } from '../../application/dtos/login.dto';
 import { IpRateLimitGuard } from '@leocodeio-njs/njs-auth';
-import { RefreshTokenDto } from '../../../validation/application/dtos/refresh-token.dto';
+import { RefreshTokenDto } from '../../../core/validation/application/dtos/refresh-token.dto';
 import { LogoutDto } from '../../application/dtos/logout.dto';
 import { AuthService } from 'src/utils/services/auth.service';
 import { LocalAuthGuard } from 'src/utils/guards/local-auth.guard';

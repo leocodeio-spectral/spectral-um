@@ -13,8 +13,8 @@ import {
 import { LogoutDto } from 'src/modules/user/application/dtos/logout.dto';
 import { IUserPort } from 'src/modules/user/domain/ports/user.port';
 import { IUser } from 'src/modules/user/domain/models/user.model';
-import { TokenManagementService } from 'src/modules/session/application/services/token-management.service';
-import { SessionManagementService } from 'src/modules/session/application/services/session-management.service';
+import { TokenManagementService } from 'src/modules/core/session/application/services/token-management.service';
+import { SessionManagementService } from 'src/modules/core/session/application/services/session-management.service';
 
 @Injectable()
 export class UserAuthenticationService {

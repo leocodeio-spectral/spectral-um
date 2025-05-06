@@ -10,7 +10,6 @@ import { JwtService } from '@nestjs/jwt';
 import * as crypto from 'crypto';
 import { RateLimiterMemory } from 'rate-limiter-flexible';
 import { SessionManagementService } from './session-management.service';
-import { ISessionPort } from 'src/modules/session/domain/ports/session.port';
 import { IUserPort } from 'src/modules/user/domain/ports/user.port';
 import { CorrelationService, LoggerService } from '@leocodeio-njs/njs-logging';
 import { IUser } from 'src/modules/user/domain/models/user.model';

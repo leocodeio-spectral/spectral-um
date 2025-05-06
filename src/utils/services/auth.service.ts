@@ -27,18 +27,18 @@ import { UserProfileDto } from 'src/modules/user/application/dtos/user-profile.d
 import { RegisterDto } from 'src/modules/user/application/dtos/register.dto';
 import { UpdateDto } from 'src/modules/user/application/dtos/update.dto';
 import { LogoutDto } from 'src/modules/user/application/dtos/logout.dto';
-import { TokenManagementService } from 'src/modules/session/application/services/token-management.service';
-import { SessionManagementService } from 'src/modules/session/application/services/session-management.service';
 import { UserRegistrationService } from 'src/modules/user/application/services/user-registration.service';
-import { MobileVerificationService } from 'src/modules/otp/application/services/mobile-verification.service';
 import { TwoFactorAuthService } from 'src/utils/services/two-factor-auth.service';
 import { UserAuthenticationService } from 'src/modules/user/application/services/user-authentication.service';
 import {
   CompleteMailLoginDto,
   InitiateMailLoginDto,
 } from 'src/modules/user/application/dtos/mail-login.dto';
-import { OtpService } from 'src/modules/otp/application/services/otp.service';
-import { EmailjsMailerService } from 'src/modules/otp/application/services/emailjs-mailer.service';
+import { SessionManagementService } from 'src/modules/core/session/application/services/session-management.service';
+import { MobileVerificationService } from 'src/modules/core/otp/application/services/mobile-verification.service';
+import { OtpService } from 'src/modules/core/otp/application/services/otp.service';
+import { EmailjsMailerService } from 'src/modules/core/otp/application/services/emailjs-mailer.service';
+import { TokenManagementService } from 'src/modules/core/session/application/services/token-management.service';
 
 @Injectable()
 export class AuthService {

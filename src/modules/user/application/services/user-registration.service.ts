@@ -19,8 +19,8 @@ import { UpdateDto } from 'src/modules/user/application/dtos/update.dto';
 import { IUser } from 'src/modules/user/domain/models/user.model';
 import { IUserPort } from 'src/modules/user/domain/ports/user.port';
 import { IUserPreferencesPort } from 'src/modules/user/domain/ports/user-preferences.port';
-import { IOtpPort } from 'src/modules/otp/domain/ports/otp.port';
-import { EmailjsMailerService } from 'src/modules/otp/application/services/emailjs-mailer.service';
+import { IOtpPort } from 'src/modules/core/otp/domain/ports/otp.port';
+import { EmailjsMailerService } from 'src/modules/core/otp/application/services/emailjs-mailer.service';
 
 @Injectable()
 export class UserRegistrationService {

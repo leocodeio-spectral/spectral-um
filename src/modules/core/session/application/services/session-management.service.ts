@@ -1,8 +1,8 @@
 import { Injectable, Inject, UnauthorizedException } from '@nestjs/common';
 import * as crypto from 'crypto';
-import { ISessionPort } from 'src/modules/session/domain/ports/session.port';
 import { CorrelationService, LoggerService } from '@leocodeio-njs/njs-logging';
-import { ISession } from 'src/modules/session/domain/models/session.model';
+import { ISessionPort } from '../../domain/ports/session.port';
+import { ISession } from '../../domain/models/session.model';
 
 @Injectable()
 export class SessionManagementService {

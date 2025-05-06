@@ -12,13 +12,13 @@ import { ApiOperation, ApiSecurity } from '@nestjs/swagger';
 import {
   VerifyMobileConfirmDto,
   VerifyMobileDto,
-} from 'src/modules/validation/application/dtos/verify-mobile.dto';
+} from 'src/modules/core/validation/application/dtos/verify-mobile.dto';
 import { AuthService } from 'src/utils/services/auth.service';
 import { EmailjsMailerService } from '../../application/services/emailjs-mailer.service';
 import {
   VerifyMailConfirmDto,
   VerifyMailDto,
-} from 'src/modules/validation/application/dtos/verify-mail.dto';
+} from 'src/modules/core/validation/application/dtos/verify-mail.dto';
 import { OtpService } from '../../application/services/otp.service';
 import { ConfigService } from '@nestjs/config';
 

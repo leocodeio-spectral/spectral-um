@@ -1,13 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { SmsService } from './sms.service';
-import { IOtpPort } from 'src/modules/otp/domain/ports/otp.port';
 import { ConfigService } from '@nestjs/config';
 import {
   CorrelationService,
   DebugUtil,
   LoggerService,
 } from '@leocodeio-njs/njs-logging';
-import { RateLimiterService } from '../../../../utils/services/rate-limiter.service';
+import { IOtpPort } from '../../domain/ports/otp.port';
+import { RateLimiterService } from 'src/utils/services/rate-limiter.service';
 
 @Injectable()
 export class MobileVerificationService {

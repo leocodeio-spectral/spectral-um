@@ -6,7 +6,7 @@ import {
 } from 'src/utils/services/constants';
 import { OTP } from '../entities/otp.entity';
 import { ConfigService } from '@nestjs/config';
-import { TwilioSmsService } from 'src/modules/otp/application/services/twilio.service';
+import { TwilioSmsService } from '../../application/services/twilio.service';
 
 const configService = new ConfigService();
 export const otpProvider = [
