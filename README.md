@@ -40,3 +40,5 @@ src/
     |_ services/
     |_ interfaces/
 ```
+
+jsonwebtoken email-validator

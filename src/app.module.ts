@@ -1,53 +1,164 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { LoggingModule } from '@leocodeio-njs/njs-logging';
-import { HealthModule } from '@leocodeio-njs/njs-health-db';
-import { ApiKeyGuard } from '@leocodeio-njs/njs-auth';
-import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
-import { LoggingInterceptor } from '@leocodeio-njs/njs-logging';
-import { AuthModule } from '@leocodeio-njs/njs-auth';
 import { AppConfigModule } from '@leocodeio-njs/njs-config';
+import {
+  LogEntry,
+  LoggerService,
+  LoggingInterceptor,
+  LoggingModule,
+  PerformanceInterceptor,
+  ResponseInterceptor,
+} from '@leocodeio-njs/njs-logging';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppConfigService } from '@leocodeio-njs/njs-config';
-import { CreatorModule } from './modules/creator/creator.module';
-import { ConfigModule } from '@nestjs/config';
-import { EditorModule } from './modules/editor/editor.module';
+import * as Joi from 'joi';
+
+import { HealthModule, PrometheusService } from '@leocodeio-njs/njs-health';
+
+// modules
+import { ValidationModule } from './modules/validation/validation.module';
+import { UserModule } from './modules/user/user-auth.module';
+import { OtpModule } from './modules/otp/otp.module';
+import { SessionModule } from './modules/session/session.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
-    LoggingModule,
-    HealthModule,
-    AuthModule,
-    AppConfigModule,
-    CreatorModule,
-    EditorModule,   
     ConfigModule.forRoot({
       isGlobal: true,
+      // Load environment variables - update with the path to your .env file
+      envFilePath: ['.env.local', '.env'],
+      // Add social media configuration variables
+      validationSchema: Joi.object({
+        // Existing validation
+
+        // APP PORT
+        PORT: Joi.number().default(3000).required(),
+
+        // DATABASE CONFIGURATION
+        DB_HOST: Joi.string().default('localhost').required(),
+        DB_USERNAME: Joi.string().default('postgres').required(),
+        DB_PASSWORD: Joi.string().default('postgres').required(),
+        DB_DATABASE: Joi.string().default('postgres').required(),
+        DB_SCHEMA: Joi.string().default('test').required(),
+        DB_PORT: Joi.number().default(5432).required(),
+
+        //rate limit
+        RATE_LIMIT_POINTS: Joi.number().default(100).required(),
+        RATE_LIMIT_DURATION: Joi.number()
+          .default(60 * 60)
+          .required(), // Per hour
+        RATE_LIMIT_BLOCK_DURATION: Joi.number()
+          .default(5 * 60)
+          .required(), // 5min block if exceeded
+
+        // guards
+        // apikey guard
+        APP_KEY: Joi.string().default('apikey').required(),
+        // acess token guard
+        ACCESS_TOKEN_VALIDATION_URL: Joi.string()
+          .default('http://localhost:3000/validate')
+          .required(),
+        AUTHORIZER_API_KEY: Joi.string().default('validkey1').required(),
+        CLUSTER_CLIENT_ID: Joi.string().default('validclient1').required(),
+
+        // validation
+        ACCESS_TOKEN_SECRET: Joi.string()
+          .default('access-token-secret')
+          .required(),
+        REFRESH_TOKEN_SECRET: Joi.string()
+          .default('refresh-token-secret')
+          .required(),
+
+        // otp
+        MOBILE_VERIFICATION: Joi.boolean().default(false).required(),
+        SMS_SERVICE: Joi.string().valid('twilio', 'fast2sms').required(),
+
+        TEST_PHONE_NUMBERS: Joi.string().optional(),
+
+        // email
+        EMAIL_FROM: Joi.string().default('noreply@um.com').required(),
+        TOPT_SECRET: Joi.string().default('this-is-totp-secret').required(),
+        GMAIL_USER: Joi.string().optional().default('gmail-user').required(),
+        GMAIL_APP_PASSWORD: Joi.string()
+          .optional()
+          .default('gmail-user-password')
+          .required(),
+
+        // jwt
+        // access token
+        JWT_SECRET: Joi.string()
+          .default('this-is-access-token-secret')
+          .required(),
+        JWT_EXPIRES_IN: Joi.string().default('30m').required(),
+
+        // refresh token
+        JWT_REFRESH_SECRET: Joi.string()
+          .default('this-is-refresh-token-secret')
+          .required(),
+        JWT_REFRESH_EXPIRES_IN: Joi.string().default('7d').required(),
+      }),
     }),
+    AppConfigModule,
+
     TypeOrmModule.forRootAsync({
       imports: [AppConfigModule],
+      inject: [AppConfigService],
       useFactory: (configService: AppConfigService) => ({
         ...configService.databaseConfig,
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
+        migrations: [__dirname + '/database/migrations/**/*{.ts,.js}'],
+        migrationsRun: true,
         synchronize: true,
+        autoLoadEntities: true,
       }),
-      inject: [AppConfigService],
+    }),
+    TypeOrmModule.forFeature([LogEntry]),
+    LoggingModule.forRoot({
+      entities: [LogEntry],
+      winston: {
+        console: true,
+        file: {
+          enabled: true,
+        },
+      },
+    }),
+    HealthModule,
+    ValidationModule,
+    UserModule,
+    SessionModule,
+    OtpModule,
+    JwtModule.registerAsync({
+      global: true,
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        secret: configService.get('JWT_SECRET'),
+        signOptions: {
+          expiresIn: configService.get('JWT_EXPIRES_IN') || '15m',
+        },
+      }),
+      inject: [ConfigService],
     }),
   ],
   controllers: [AppController],
   providers: [
     AppService,
+    PrometheusService,
+    LoggerService,
     {
-      provide: APP_INTERCEPTOR,
-      useClass: LoggingInterceptor,
+      provide: 'APP_INTERCEPTOR',
+      useClass: PerformanceInterceptor,
     },
     {
-      provide: APP_GUARD,
-      useClass: ApiKeyGuard,
+      provide: 'APP_INTERCEPTOR',
+      useClass: ResponseInterceptor,
+    },
+    {
+      provide: 'APP_INTERCEPTOR',
+      useClass: LoggingInterceptor,
     },
   ],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {}
-}
+export class AppModule {}
