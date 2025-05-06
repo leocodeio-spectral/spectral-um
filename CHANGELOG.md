@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/leocodeio-spectral/spectral-um/compare/v1.0.2...v1.0.3) (2025-05-06)
+
+
+### Bug Fixes
+
+* **file structure:** file structure ([0cc71a7](https://github.com/leocodeio-spectral/spectral-um/commit/0cc71a7f0a5aa62a4b07205e171b54b5e43abee4))
+
 ## [1.0.2](https://github.com/leocodeio-spectral/spectral-um/compare/v1.0.1...v1.0.2) (2025-05-06)
 
 
