@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/leocodeio-spectral/spectral-um/compare/v1.1.1...v1.2.0) (2025-05-07)
+
+
+### Features
+
+* **working:** working ([5c6442c](https://github.com/leocodeio-spectral/spectral-um/commit/5c6442c04e377b35f93b743c7b83007a66d3f6bc))
+
 ## [1.1.1](https://github.com/leocodeio-spectral/spectral-um/compare/v1.1.0...v1.1.1) (2025-05-07)
 
 # [1.1.0](https://github.com/leocodeio-spectral/spectral-um/compare/v1.0.5...v1.1.0) (2025-05-07)
