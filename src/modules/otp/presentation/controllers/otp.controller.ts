@@ -27,7 +27,7 @@ import {
 
 @UseGuards(IpRateLimitGuard)
 @ApiSecurity('x-api-key')
-@Controller('otp')
+@Controller('create/otp')
 export class CreatorOtpController {
   constructor(
     private authService: CreatorAuthService,
@@ -103,7 +103,7 @@ export class CreatorOtpController {
 
 @UseGuards(IpRateLimitGuard)
 @ApiSecurity('x-api-key')
-@Controller('otp')
+@Controller('editor/otp')
 export class EditorOtpController {
   constructor(
     private authService: EditorAuthService,

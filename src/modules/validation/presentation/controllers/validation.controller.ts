@@ -27,9 +27,9 @@ import {
 } from 'src/modules/user/application/services/auth.service';
 import { JwtAuthGuard } from 'src/modules/user/presentation/guards/jwt-auth.guard';
 
-@Controller('validate')
 @ApiSecurity('x-api-key')
 @ApiSecurity('Authorization')
+@Controller('creator/validate')
 export class CreatorValidationController {
   constructor(
     private readonly validationService: ValidationService,
@@ -94,9 +94,9 @@ export class CreatorValidationController {
   }
 }
 
-@Controller('validate')
 @ApiSecurity('x-api-key')
 @ApiSecurity('Authorization')
+@Controller('editor/validate')
 export class EditorValidationController {
   constructor(
     private readonly validationService: ValidationService,

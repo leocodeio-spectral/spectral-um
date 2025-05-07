@@ -40,7 +40,7 @@ import { RefreshTokenDto } from 'src/modules/validation/application/dtos/refresh
 @ApiSecurity('x-api-key')
 @ApiSecurity('Authorization')
 @Controller('creator')
-export class CreatorUserAuthController {
+export class CreatorAuthController {
   constructor(private creatorAuthService: CreatorAuthService) {}
 
   @ApiOperation({ summary: 'User register' })

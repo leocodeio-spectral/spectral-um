@@ -6,7 +6,7 @@ import {
   EditorPreferences,
 } from './infrastructure/entities/user-preferences.entity';
 import {
-  CreatorUserAuthController,
+  CreatorAuthController,
   EditorAuthController,
 } from './presentation/controllers/user-auth.controller';
 import {
@@ -54,7 +54,7 @@ import {
     TypeOrmModule.forFeature([Creator, CreatorPreferences]),
     CreatorOtpModule,
   ],
-  controllers: [CreatorUserAuthController],
+  controllers: [CreatorAuthController],
   providers: [
     CreatorAuthService,
     JwtService,
