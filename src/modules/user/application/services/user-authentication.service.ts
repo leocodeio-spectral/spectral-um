@@ -1,15 +1,21 @@
 import { Injectable, Inject, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
 import * as crypto from 'crypto';
-import { EditorTwoFactorAuthService,CreatorTwoFactorAuthService } from './two-factor-auth.service';
+import {
+  EditorTwoFactorAuthService,
+  CreatorTwoFactorAuthService,
+} from './two-factor-auth.service';
 
 import { CorrelationService, LoggerService } from '@leocodeio-njs/njs-logging';
-import { IEditorPort,ICreatorPort } from '../../domain/ports/user.port';
-import { SessionManagementService } from 'src/modules/common/session/application/services/session-management.service';
+import { IEditorPort, ICreatorPort } from '../../domain/ports/user.port';
+import { SessionManagementService } from 'src/modules/session/application/services/session-management.service';
 import { RateLimiterService } from 'src/utils/services/rate-limiter.service';
 import { ICreator, IEditor } from '../../domain/models/user.model';
 import { DeviceInfoDto, LoginDto } from '../dtos/login.dto';
-import { CreatorTokenManagementService,EditorTokenManagementService } from 'src/modules/common/session/application/services/token-management.service';
+import {
+  CreatorTokenManagementService,
+  EditorTokenManagementService,
+} from 'src/modules/session/application/services/token-management.service';
 import { LogoutDto } from '../dtos/logout.dto';
 
 @Injectable()
@@ -209,8 +215,6 @@ export class CreatorAuthenticationService {
     return `${dto.channel}${dto.userAgent ? ` - ${dto.userAgent}` : ''}`;
   }
 }
-
-
 
 @Injectable()
 export class EditorAuthenticationService {

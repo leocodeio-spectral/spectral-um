@@ -6,16 +6,22 @@ import {
 } from '@nestjs/common';
 
 import * as bcrypt from 'bcryptjs';
-import { CreatorAuthPolicyService,EditorAuthPolicyService } from './auth-policy.service';
+import {
+  CreatorAuthPolicyService,
+  EditorAuthPolicyService,
+} from './auth-policy.service';
 import { ConfigService } from '@nestjs/config';
-import { ICreatorPort,IEditorPort } from '../../domain/ports/user.port';
-import { IOtpPort } from 'src/modules/common/otp/domain/ports/otp.port';
-import { ICreatorPreferencesPort, IEditorPreferencesPort } from '../../domain/ports/user-preferences.port';
-import { EmailjsMailerService } from 'src/modules/common/otp/application/services/emailjs-mailer.service';
+import { ICreatorPort, IEditorPort } from '../../domain/ports/user.port';
+import { IOtpPort } from 'src/modules/otp/domain/ports/otp.port';
+import {
+  ICreatorPreferencesPort,
+  IEditorPreferencesPort,
+} from '../../domain/ports/user-preferences.port';
+import { EmailjsMailerService } from 'src/modules/otp/application/services/emailjs-mailer.service';
 import { UserProfileDto } from '../dtos/user-profile.dto';
 import { RegisterDto } from '../dtos/register.dto';
 import { userStatus } from '../../domain/enums/user_status.enum';
-import { ICreator,IEditor } from '../../domain/models/user.model';
+import { ICreator, IEditor } from '../../domain/models/user.model';
 import { UpdateDto } from '../dtos/update.dto';
 
 @Injectable()
@@ -181,8 +187,6 @@ export class CreatorRegistrationService {
     return bcrypt.hash(password, saltRounds);
   }
 }
-
-
 
 @Injectable()
 export class EditorRegistrationService {

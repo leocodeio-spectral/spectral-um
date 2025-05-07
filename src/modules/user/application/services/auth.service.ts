@@ -24,15 +24,18 @@ import {
   CreatorAuthenticationService,
   EditorAuthenticationService,
 } from './user-authentication.service';
-import { SessionManagementService } from 'src/modules/common/session/application/services/session-management.service';
+import { SessionManagementService } from 'src/modules/session/application/services/session-management.service';
 import {
   EditorTwoFactorAuthService,
   CreatorTwoFactorAuthService,
 } from './two-factor-auth.service';
-import { MobileVerificationService } from 'src/modules/common/otp/application/services/mobile-verification.service';
-import { CreatorRegistrationService,EditorRegistrationService } from './user-registration.service';
-import { OtpService } from 'src/modules/common/otp/application/services/otp.service';
-import { EmailjsMailerService } from 'src/modules/common/otp/application/services/emailjs-mailer.service';
+import { MobileVerificationService } from 'src/modules/otp/application/services/mobile-verification.service';
+import {
+  CreatorRegistrationService,
+  EditorRegistrationService,
+} from './user-registration.service';
+import { OtpService } from 'src/modules/otp/application/services/otp.service';
+import { EmailjsMailerService } from 'src/modules/otp/application/services/emailjs-mailer.service';
 import { LoginDto } from '../dtos/login.dto';
 import { RegisterDto } from '../dtos/register.dto';
 import { UserProfileDto } from '../dtos/user-profile.dto';
@@ -42,7 +45,7 @@ import { ICreatorPort, IEditorPort } from '../../domain/ports/user.port';
 import {
   CreatorTokenManagementService,
   EditorTokenManagementService,
-} from 'src/modules/common/session/application/services/token-management.service';
+} from 'src/modules/session/application/services/token-management.service';
 import {
   CompleteMobileLoginDto,
   InitiateMobileLoginDto,

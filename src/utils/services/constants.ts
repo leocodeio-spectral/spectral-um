@@ -1,5 +1,5 @@
-import { Fast2SmsService } from "src/modules/common/otp/application/services/fast2sms.service";
-import { TwilioSmsService } from "src/modules/common/otp/application/services/twilio.service";
+import { Fast2SmsService } from 'src/modules/otp/application/services/fast2sms.service';
+import { TwilioSmsService } from 'src/modules/otp/application/services/twilio.service';
 
 export const CREATOR_REPOSITORY = 'CREATOR_REPOSITORY';
 export const CREATOR_PREFERENCES_REPOSITORY = 'CREATOR_PREFERENCES_REPOSITORY';

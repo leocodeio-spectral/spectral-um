@@ -22,10 +22,7 @@ import {
 } from './domain/ports/user-preferences.port';
 
 import { PassportModule } from '@nestjs/passport';
-import {
-  CreatorOtpModule,
-  EditorOtpModule,
-} from 'src/modules/common/otp/otp.module';
+import { CreatorOtpModule, EditorOtpModule } from 'src/modules/otp/otp.module';
 import {
   EditorJwtStrategy,
   CreatorJwtStrategy,
@@ -34,10 +31,10 @@ import {
   CreatorLocalStrategy,
   EditorLocalStrategy,
 } from './presentation/strategies/local.strategy';
-import { otpProvider } from 'src/modules/common/otp/infrastructure/providers/session.provider';
-import { sessionProvider } from 'src/modules/common/session/infrastructure/providers/session.provider';
-import { SessionRepositoryAdapter } from 'src/modules/common/session/infrastructure/adapters/session.repository';
-import { ISessionPort } from 'src/modules/common/session/domain/ports/session.port';
+import { otpProvider } from 'src/modules/otp/infrastructure/providers/session.provider';
+import { sessionProvider } from 'src/modules/session/infrastructure/providers/session.provider';
+import { SessionRepositoryAdapter } from 'src/modules/session/infrastructure/adapters/session.repository';
+import { ISessionPort } from 'src/modules/session/domain/ports/session.port';
 import {
   CreatorAuthService,
   EditorAuthService,

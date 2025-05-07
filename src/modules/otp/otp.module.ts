@@ -21,45 +21,45 @@ import { MobileVerificationService } from './application/services/mobile-verific
 import {
   CreatorAuthService,
   EditorAuthService,
-} from 'src/modules/user-module/user/application/services/auth.service';
+} from 'src/modules/user/application/services/auth.service';
 import { JwtService } from '@nestjs/jwt';
 import {
   CreatorAuthenticationService,
   EditorAuthenticationService,
-} from 'src/modules/user-module/user/application/services/user-authentication.service';
+} from 'src/modules/user/application/services/user-authentication.service';
 import {
   CreatorRegistrationService,
   EditorRegistrationService,
-} from 'src/modules/user-module/user/application/services/user-registration.service';
+} from 'src/modules/user/application/services/user-registration.service';
 import {
   CreatorTwoFactorAuthService,
   EditorTwoFactorAuthService,
-} from 'src/modules/user-module/user/application/services/two-factor-auth.service';
+} from 'src/modules/user/application/services/two-factor-auth.service';
 import { RateLimiterService } from 'src/utils/services/rate-limiter.service';
 import {
   CreatorAuthPolicyService,
   EditorAuthPolicyService,
-} from 'src/modules/user-module/user/application/services/auth-policy.service';
+} from 'src/modules/user/application/services/auth-policy.service';
 import {
   ICreatorPort,
   IEditorPort,
-} from 'src/modules/user-module/user/domain/ports/user.port';
+} from 'src/modules/user/domain/ports/user.port';
 import {
   EditorRepositoryAdapter,
   CreatorRepositoryAdapter,
-} from 'src/modules/user-module/user/infrastructure/adapters/user.repository';
+} from 'src/modules/user/infrastructure/adapters/user.repository';
 import {
   ICreatorPreferencesPort,
   IEditorPreferencesPort,
-} from 'src/modules/user-module/user/domain/ports/user-preferences.port';
+} from 'src/modules/user/domain/ports/user-preferences.port';
 import {
   CreatorPreferencesRepositoryAdapter,
   EditorPreferencesRepositoryAdapter,
-} from 'src/modules/user-module/user/infrastructure/adapters/user-preferences.repository';
+} from 'src/modules/user/infrastructure/adapters/user-preferences.repository';
 import {
   creatorsProvider,
   editorsProvider,
-} from 'src/modules/user-module/user/infrastructure/providers/users.provider';
+} from 'src/modules/user/infrastructure/providers/users.provider';
 import { sessionProvider } from '../session/infrastructure/providers/session.provider';
 
 @Module({
@@ -110,7 +110,7 @@ import { sessionProvider } from '../session/infrastructure/providers/session.pro
     CreatorAuthPolicyService,
     EmailjsMailerService,
     OtpService,
-  ],  
+  ],
 })
 export class CreatorOtpModule {}
 

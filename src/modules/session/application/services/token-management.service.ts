@@ -12,10 +12,15 @@ import { RateLimiterMemory } from 'rate-limiter-flexible';
 import { SessionManagementService } from './session-management.service';
 import { CorrelationService, LoggerService } from '@leocodeio-njs/njs-logging';
 import { TokenPayload } from 'src/utils/types/token';
-import { ICreatorPort,IEditorPort
- } from 'src/modules/user-module/user/domain/ports/user.port';
-import { CreatorAuthPolicyService,EditorAuthPolicyService } from 'src/modules/user-module/user/application/services/auth-policy.service';
-import { ICreator,IEditor } from 'src/modules/user-module/user/domain/models/user.model';
+import {
+  ICreatorPort,
+  IEditorPort,
+} from 'src/modules/user/domain/ports/user.port';
+import {
+  CreatorAuthPolicyService,
+  EditorAuthPolicyService,
+} from 'src/modules/user/application/services/auth-policy.service';
+import { ICreator, IEditor } from 'src/modules/user/domain/models/user.model';
 
 interface RefreshTokenPayload {
   sub: string;
@@ -312,7 +317,6 @@ export class CreatorTokenManagementService {
   //   return validClients.includes(clientId);
   // }
 }
-
 
 @Injectable()
 export class EditorTokenManagementService {

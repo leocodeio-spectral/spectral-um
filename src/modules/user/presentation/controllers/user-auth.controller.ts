@@ -27,10 +27,13 @@ import {
   CompleteMailLoginDto,
   InitiateMailLoginDto,
 } from '../../application/dtos/mail-login.dto';
-import { CreatorAuthService, EditorAuthService } from '../../application/services/auth.service';
+import {
+  CreatorAuthService,
+  EditorAuthService,
+} from '../../application/services/auth.service';
 import { LocalAuthGuard } from '../guards/local-auth.guard';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
-import { RefreshTokenDto } from 'src/modules/user-module/validation/application/dtos/refresh-token.dto';
+import { RefreshTokenDto } from 'src/modules/validation/application/dtos/refresh-token.dto';
 
 @UseGuards(IpRateLimitGuard)
 @UseGuards(ApiKeyGuard)
@@ -90,7 +93,9 @@ export class CreatorUserAuthController {
   @ApiOperation({ summary: 'Refresh your access token' })
   @Post('refresh')
   async refreshToken(@Body() refreshTokenDto: RefreshTokenDto) {
-    return this.creatorAuthService.refreshAccessToken(refreshTokenDto.refreshToken);
+    return this.creatorAuthService.refreshAccessToken(
+      refreshTokenDto.refreshToken,
+    );
   }
 
   @ApiOperation({ summary: 'Initiate mobile login' })
@@ -127,7 +132,6 @@ export class CreatorUserAuthController {
     return this.creatorAuthService.isUserExists(dto.type, dto.identifier);
   }
 }
-
 
 @UseGuards(IpRateLimitGuard)
 @ApiSecurity('x-api-key')
@@ -186,7 +190,9 @@ export class EditorAuthController {
   @ApiOperation({ summary: 'Refresh your access token' })
   @Post('refresh')
   async refreshToken(@Body() refreshTokenDto: RefreshTokenDto) {
-    return this.editorAuthService.refreshAccessToken(refreshTokenDto.refreshToken);
+    return this.editorAuthService.refreshAccessToken(
+      refreshTokenDto.refreshToken,
+    );
   }
 
   @ApiOperation({ summary: 'Initiate mobile login' })
@@ -223,4 +229,3 @@ export class EditorAuthController {
     return this.editorAuthService.isUserExists(dto.type, dto.identifier);
   }
 }
-

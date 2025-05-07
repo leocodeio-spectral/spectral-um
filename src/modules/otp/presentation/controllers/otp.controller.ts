@@ -12,15 +12,18 @@ import { ApiOperation, ApiSecurity } from '@nestjs/swagger';
 import {
   VerifyMobileConfirmDto,
   VerifyMobileDto,
-} from 'src/modules/user-module/validation/application/dtos/verify-mobile.dto';
+} from 'src/modules/validation/application/dtos/verify-mobile.dto';
 import { EmailjsMailerService } from '../../application/services/emailjs-mailer.service';
 import {
   VerifyMailConfirmDto,
   VerifyMailDto,
-} from 'src/modules/user-module/validation/application/dtos/verify-mail.dto';
+} from 'src/modules/validation/application/dtos/verify-mail.dto';
 import { OtpService } from '../../application/services/otp.service';
 import { ConfigService } from '@nestjs/config';
-import { CreatorAuthService,EditorAuthService } from 'src/modules/user-module/user/application/services/auth.service';
+import {
+  CreatorAuthService,
+  EditorAuthService,
+} from 'src/modules/user/application/services/auth.service';
 
 @UseGuards(IpRateLimitGuard)
 @ApiSecurity('x-api-key')
@@ -97,8 +100,6 @@ export class CreatorOtpController {
     };
   }
 }
-
-
 
 @UseGuards(IpRateLimitGuard)
 @ApiSecurity('x-api-key')

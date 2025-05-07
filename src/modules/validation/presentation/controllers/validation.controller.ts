@@ -20,12 +20,12 @@ import { Request } from 'express';
 import {
   ICreatorPort,
   IEditorPort,
-} from 'src/modules/user-module/user/domain/ports/user.port';
+} from 'src/modules/user/domain/ports/user.port';
 import {
   CreatorAuthService,
   EditorAuthService,
-} from 'src/modules/user-module/user/application/services/auth.service';
-import { JwtAuthGuard } from 'src/modules/user-module/user/presentation/guards/jwt-auth.guard';
+} from 'src/modules/user/application/services/auth.service';
+import { JwtAuthGuard } from 'src/modules/user/presentation/guards/jwt-auth.guard';
 
 @Controller('validate')
 @ApiSecurity('x-api-key')
