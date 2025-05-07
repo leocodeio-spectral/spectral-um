@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/leocodeio-spectral/spectral-um/compare/v1.0.5...v1.1.0) (2025-05-07)
+
+
+### Features
+
+* **dual creator and editor:** dual creator and editor ([981aa3d](https://github.com/leocodeio-spectral/spectral-um/commit/981aa3db748907f5ff880ca0c4e991e4c1f7f6a1))
+
 ## [1.0.5](https://github.com/leocodeio-spectral/spectral-um/compare/v1.0.4...v1.0.5) (2025-05-07)
 
 ## [1.0.4](https://github.com/leocodeio-spectral/spectral-um/compare/v1.0.3...v1.0.4) (2025-05-07)
