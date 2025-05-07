@@ -1,8 +1,10 @@
 import { Fast2SmsService } from "src/modules/common/otp/application/services/fast2sms.service";
 import { TwilioSmsService } from "src/modules/common/otp/application/services/twilio.service";
 
-export const USER_REPOSITORY = 'USER_REPOSITORY';
-export const USER_PREFERENCES_REPOSITORY = 'USER_PREFERENCES_REPOSITORY';
+export const CREATOR_REPOSITORY = 'CREATOR_REPOSITORY';
+export const CREATOR_PREFERENCES_REPOSITORY = 'CREATOR_PREFERENCES_REPOSITORY';
+export const EDITOR_REPOSITORY = 'EDITOR_REPOSITORY';
+export const EDITOR_PREFERENCES_REPOSITORY = 'EDITOR_PREFERENCES_REPOSITORY';
 export const SESSION_REPOSITORY = 'SESSION_REPOSITORY';
 
 // OTP

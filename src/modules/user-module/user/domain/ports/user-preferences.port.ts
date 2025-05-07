@@ -1,12 +1,23 @@
-import { IUserPreferences } from '../models/user-preferences.model';
+import { ICreatorPreferences, IEditorPreferences } from '../models/user-preferences.model';
 
-export abstract class IUserPreferencesPort {
-  abstract findByUserId(userId: string): Promise<IUserPreferences | null>;
+export abstract class ICreatorPreferencesPort {
+  abstract findByUserId(userId: string): Promise<ICreatorPreferences | null>;
   abstract save(
-    IUserPreferences: Partial<IUserPreferences>,
-  ): Promise<IUserPreferences>;
+    ICreatorPreferences: Partial<ICreatorPreferences>,
+  ): Promise<ICreatorPreferences>;
   abstract update(
     id: string,
-    IUserPreferences: Partial<IUserPreferences>,
-  ): Promise<IUserPreferences>;
+    ICreatorPreferences: Partial<ICreatorPreferences>,
+  ): Promise<ICreatorPreferences>;
+}
+
+export abstract class IEditorPreferencesPort {
+  abstract findByUserId(userId: string): Promise<IEditorPreferences | null>;
+  abstract save(
+    IEditorPreferences: Partial<IEditorPreferences>,
+  ): Promise<IEditorPreferences>;
+  abstract update(
+    id: string,
+    IEditorPreferences: Partial<IEditorPreferences>,
+  ): Promise<IEditorPreferences>;
 }

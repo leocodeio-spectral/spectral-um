@@ -1,55 +1,118 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './infrastructure/entities/user.entity';
-import { UserPreferences } from './infrastructure/entities/user-preferences.entity';
-import { UserAuthController } from './presentation/controllers/user-auth.controller';
-import { usersProvider } from './infrastructure/providers/users.provider';
+import { Creator, Editor } from './infrastructure/entities/user.entity';
+import {
+  CreatorPreferences,
+  EditorPreferences,
+} from './infrastructure/entities/user-preferences.entity';
+import {
+  CreatorUserAuthController,
+  EditorAuthController,
+} from './presentation/controllers/user-auth.controller';
+import {
+  creatorsProvider,
+  editorsProvider,
+} from './infrastructure/providers/users.provider';
 import { JwtService } from '@nestjs/jwt';
 
-import { IUserPort } from './domain/ports/user.port';
-import { UserRepositoryAdapter } from './infrastructure/adapters/user.repository';
-import { UserPreferencesRepositoryAdapter } from './infrastructure/adapters/user-preferences.repository';
-import { IUserPreferencesPort } from './domain/ports/user-preferences.port';
+import { ICreatorPort, IEditorPort } from './domain/ports/user.port';
+import {
+  ICreatorPreferencesPort,
+  IEditorPreferencesPort,
+} from './domain/ports/user-preferences.port';
 
 import { PassportModule } from '@nestjs/passport';
-import { OtpModule } from 'src/modules/common/otp/otp.module';
-import { JwtStrategy } from './presentation/strategies/jwt.strategy';
-import { LocalStrategy } from './presentation/strategies/local.strategy';
+import {
+  CreatorOtpModule,
+  EditorOtpModule,
+} from 'src/modules/common/otp/otp.module';
+import {
+  EditorJwtStrategy,
+  CreatorJwtStrategy,
+} from './presentation/strategies/jwt.strategy';
+import {
+  CreatorLocalStrategy,
+  EditorLocalStrategy,
+} from './presentation/strategies/local.strategy';
 import { otpProvider } from 'src/modules/common/otp/infrastructure/providers/session.provider';
 import { sessionProvider } from 'src/modules/common/session/infrastructure/providers/session.provider';
 import { SessionRepositoryAdapter } from 'src/modules/common/session/infrastructure/adapters/session.repository';
 import { ISessionPort } from 'src/modules/common/session/domain/ports/session.port';
-import { AuthService } from './application/services/auth.service';
+import {
+  CreatorAuthService,
+  EditorAuthService,
+} from './application/services/auth.service';
+import {
+  CreatorRepositoryAdapter,
+  EditorRepositoryAdapter,
+} from './infrastructure/adapters/user.repository';
+import {
+  CreatorPreferencesRepositoryAdapter,
+  EditorPreferencesRepositoryAdapter,
+} from './infrastructure/adapters/user-preferences.repository';
 
 @Module({
   imports: [
     PassportModule,
-    TypeOrmModule.forFeature([User, UserPreferences]),
-    OtpModule,
+    TypeOrmModule.forFeature([Creator, CreatorPreferences]),
+    CreatorOtpModule,
   ],
-  controllers: [UserAuthController],
+  controllers: [CreatorUserAuthController],
   providers: [
-    AuthService,
+    CreatorAuthService,
     JwtService,
     {
-      provide: IUserPort,
-      useClass: UserRepositoryAdapter,
+      provide: ICreatorPort,
+      useClass: CreatorRepositoryAdapter,
     },
     {
-      provide: IUserPreferencesPort,
-      useClass: UserPreferencesRepositoryAdapter,
+      provide: ICreatorPreferencesPort,
+      useClass: CreatorPreferencesRepositoryAdapter,
     },
     {
       provide: ISessionPort,
       useClass: SessionRepositoryAdapter,
     },
-    ...usersProvider,
+    ...creatorsProvider,
     ...sessionProvider,
     ...otpProvider,
 
     // passport js
-    LocalStrategy,
-    JwtStrategy,
+    CreatorLocalStrategy,
+    CreatorJwtStrategy,
   ],
 })
-export class UserModule {}
+export class CreatorModule {}
+
+@Module({
+  imports: [
+    PassportModule,
+    TypeOrmModule.forFeature([Editor, EditorPreferences]),
+    EditorOtpModule,
+  ],
+  controllers: [EditorAuthController],
+  providers: [
+    EditorAuthService,
+    JwtService,
+    {
+      provide: IEditorPort,
+      useClass: EditorRepositoryAdapter,
+    },
+    {
+      provide: IEditorPreferencesPort,
+      useClass: EditorPreferencesRepositoryAdapter,
+    },
+    {
+      provide: ISessionPort,
+      useClass: SessionRepositoryAdapter,
+    },
+    ...editorsProvider,
+    ...sessionProvider,
+    ...otpProvider,
+
+    // passport js
+    EditorLocalStrategy,
+    EditorJwtStrategy,
+  ],
+})
+export class EditorModule {}

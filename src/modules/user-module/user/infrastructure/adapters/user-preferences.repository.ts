@@ -1,27 +1,41 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { IUserPreferencesPort } from '../../domain/ports/user-preferences.port';
-import { UserPreferences } from '../entities/user-preferences.entity';
-import { IUserPreferences } from '../../domain/models/user-preferences.model';
-import { USER_PREFERENCES_REPOSITORY } from 'src/utils/services/constants';
+import {
+  ICreatorPreferencesPort,
+  IEditorPreferencesPort,
+} from '../../domain/ports/user-preferences.port';
+import {
+  CreatorPreferences,
+  EditorPreferences,
+} from '../entities/user-preferences.entity';
+import {
+  ICreatorPreferences,
+  IEditorPreferences,
+} from '../../domain/models/user-preferences.model';
+import {
+  CREATOR_PREFERENCES_REPOSITORY,
+  EDITOR_PREFERENCES_REPOSITORY,
+} from 'src/utils/services/constants';
 
 @Injectable()
-export class UserPreferencesRepositoryAdapter implements IUserPreferencesPort {
+export class CreatorPreferencesRepositoryAdapter
+  implements ICreatorPreferencesPort
+{
   constructor(
-    @Inject(USER_PREFERENCES_REPOSITORY)
-    private repository: Repository<UserPreferences>,
+    @Inject(CREATOR_PREFERENCES_REPOSITORY)
+    private repository: Repository<CreatorPreferences>,
   ) {}
 
-  async findByUserId(userId: string): Promise<IUserPreferences | null> {
+  async findByUserId(userId: string): Promise<ICreatorPreferences | null> {
     const userPreferences = await this.repository.findOne({
-      where: { userId },
+      where: { creatorId: userId },
     });
     return userPreferences ? this.toDomain(userPreferences) : null;
   }
 
   async save(
-    userPreferences: Partial<UserPreferences>,
-  ): Promise<IUserPreferences> {
+    userPreferences: Partial<CreatorPreferences>,
+  ): Promise<ICreatorPreferences> {
     console.log('user creation log 1', userPreferences);
     const entity = this.repository.create(userPreferences);
     console.log('user creation log 2', entity);
@@ -32,19 +46,70 @@ export class UserPreferencesRepositoryAdapter implements IUserPreferencesPort {
 
   async update(
     id: string,
-    userPreferences: Partial<UserPreferences>,
-  ): Promise<IUserPreferences> {
-    await this.repository.update({ userId: id }, userPreferences);
+    userPreferences: Partial<CreatorPreferences>,
+  ): Promise<ICreatorPreferences> {
+    await this.repository.update({ creatorId: id }, userPreferences);
     const updatedUserPreferences = await this.repository.findOne({
-      where: { userId: id },
+      where: { creatorId: id },
     });
     return this.toDomain(updatedUserPreferences!);
   }
 
-  private toDomain(schema: UserPreferences): IUserPreferences {
+  private toDomain(schema: CreatorPreferences): ICreatorPreferences {
     return {
       id: schema.id,
-      userId: schema.userId,
+      userId: schema.creatorId,
+      language: schema.language!,
+      theme: schema.theme!,
+      timeZone: schema.timeZone!,
+      createdAt: schema.createdAt,
+      updatedAt: schema.updatedAt,
+    };
+  }
+}
+
+@Injectable()
+export class EditorPreferencesRepositoryAdapter
+  implements IEditorPreferencesPort
+{
+  constructor(
+    @Inject(EDITOR_PREFERENCES_REPOSITORY)
+    private repository: Repository<EditorPreferences>,
+  ) {}
+
+  async findByUserId(userId: string): Promise<IEditorPreferences | null> {
+    const userPreferences = await this.repository.findOne({
+      where: { editorId: userId },
+    });
+    return userPreferences ? this.toDomain(userPreferences) : null;
+  }
+
+  async save(
+    userPreferences: Partial<EditorPreferences>,
+  ): Promise<IEditorPreferences> {
+    console.log('user creation log 1', userPreferences);
+    const entity = this.repository.create(userPreferences);
+    console.log('user creation log 2', entity);
+    const savedUserPreferences = await this.repository.save(entity);
+    console.log('user creation log 3', savedUserPreferences);
+    return this.toDomain(savedUserPreferences);
+  }
+
+  async update(
+    id: string,
+    userPreferences: Partial<EditorPreferences>,
+  ): Promise<IEditorPreferences> {
+    await this.repository.update({ editorId: id }, userPreferences);
+    const updatedUserPreferences = await this.repository.findOne({
+      where: { editorId: id },
+    });
+    return this.toDomain(updatedUserPreferences!);
+  }
+
+  private toDomain(schema: EditorPreferences): IEditorPreferences {
+    return {
+      id: schema.id,
+      userId: schema.editorId,
       language: schema.language!,
       theme: schema.theme!,
       timeZone: schema.timeZone!,
