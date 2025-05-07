@@ -28,7 +28,7 @@ import { RegisterDto } from 'src/modules/user/application/dtos/register.dto';
 import { UpdateDto } from 'src/modules/user/application/dtos/update.dto';
 import { LogoutDto } from 'src/modules/user/application/dtos/logout.dto';
 import { UserRegistrationService } from 'src/modules/user/application/services/user-registration.service';
-import { TwoFactorAuthService } from 'src/utils/services/two-factor-auth.service';
+import { TwoFactorAuthService } from 'src/modules/user/application/services/two-factor-auth.service';
 import { UserAuthenticationService } from 'src/modules/user/application/services/user-authentication.service';
 import {
   CompleteMailLoginDto,

@@ -10,7 +10,7 @@ import { userStatus } from 'src/modules/user/domain/enums/user_status.enum';
 import { IUser } from 'src/modules/user/domain/models/user.model';
 import { User } from 'src/modules/user/infrastructure/entities/user.entity';
 import { Repository } from 'typeorm';
-import { USER_REPOSITORY } from './constants';
+import { USER_REPOSITORY } from '../../../../utils/services/constants';
 
 // Define channels for clarity
 export enum Channel {

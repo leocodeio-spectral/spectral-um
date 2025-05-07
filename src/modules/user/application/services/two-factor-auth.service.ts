@@ -1,7 +1,7 @@
 import { Injectable, Inject, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
 import { authenticator } from 'otplib';
-import { USER_REPOSITORY } from './constants';
+import { USER_REPOSITORY } from '../../../../utils/services/constants';
 import { IUserPort } from 'src/modules/user/domain/ports/user.port';
 
 @Injectable()

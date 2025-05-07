@@ -13,7 +13,7 @@ import { SessionManagementService } from './session-management.service';
 import { IUserPort } from 'src/modules/user/domain/ports/user.port';
 import { CorrelationService, LoggerService } from '@leocodeio-njs/njs-logging';
 import { IUser } from 'src/modules/user/domain/models/user.model';
-import { AuthPolicyService } from 'src/utils/services/auth-policy.service';
+import { AuthPolicyService } from 'src/modules/user/application/services/auth-policy.service';
 import { TokenPayload } from 'src/utils/types/token';
 
 interface RefreshTokenPayload {

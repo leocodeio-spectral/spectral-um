@@ -2,14 +2,14 @@ import { Module } from '@nestjs/common';
 import { OTP } from './infrastructure/entities/otp.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { OtpController } from './presentation/controllers/otp.controller';
-import { AuthService } from 'src/utils/services/auth.service';
+import { AuthService } from 'src/modules/user/application/services/auth.service';
 import { JwtService } from '@nestjs/jwt';
 import { UserAuthenticationService } from 'src/modules/user/application/services/user-authentication.service';
 
-import { TwoFactorAuthService } from 'src/utils/services/two-factor-auth.service';
+import { TwoFactorAuthService } from 'src/modules/user/application/services/two-factor-auth.service';
 import { UserRegistrationService } from 'src/modules/user/application/services/user-registration.service';
 import { RateLimiterService } from 'src/utils/services/rate-limiter.service';
-import { AuthPolicyService } from 'src/utils/services/auth-policy.service';
+import { AuthPolicyService } from 'src/modules/user/application/services/auth-policy.service';
 import { sessionProvider } from '../session/infrastructure/providers/session.provider';
 import { otpProvider } from './infrastructure/providers/session.provider';
 import { IOtpPort } from './domain/ports/otp.port';

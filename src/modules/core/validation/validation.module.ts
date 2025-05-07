@@ -3,11 +3,10 @@ import { ValidationService } from './application/services/validation.service';
 import { ValidationController } from './presentation/controllers/validation.controller';
 import { JwtService } from '@nestjs/jwt';
 
-import { AuthService } from 'src/utils/services/auth.service';
+import { AuthService } from 'src/modules/user/application/services/auth.service';
 import { UserRepositoryAdapter } from '../../user/infrastructure/adapters/user.repository';
 import { IUserPort } from '../../user/domain/ports/user.port';
 import { usersProvider } from '../../user/infrastructure/providers/users.provider';
-
 
 import { SessionRepositoryAdapter } from '../session/infrastructure/adapters/session.repository';
 import { ISessionPort } from '../session/domain/ports/session.port';

@@ -10,7 +10,7 @@ import {
   USER_REPOSITORY,
 } from '../../../../utils/services/constants';
 import * as bcrypt from 'bcryptjs';
-import { AuthPolicyService } from '../../../../utils/services/auth-policy.service';
+import { AuthPolicyService } from './auth-policy.service';
 import { ConfigService } from '@nestjs/config';
 import { RegisterDto } from 'src/modules/user/application/dtos/register.dto';
 import { UserProfileDto } from 'src/modules/user/application/dtos/user-profile.dto';

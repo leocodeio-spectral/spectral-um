@@ -18,7 +18,7 @@ import { ApiOperation, ApiSecurity } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/utils/guards/jwt-auth.guard';
 import { AuthExceptionFilter } from 'src/utils/filters/auth-exceptions.filter';
 import { ValidateTokenDto } from '../../application/dtos/validate-token.dto';
-import { AuthService } from 'src/utils/services/auth.service';
+import { AuthService } from 'src/modules/user/application/services/auth.service';
 import { Request } from 'express';
 
 @Controller('validate')

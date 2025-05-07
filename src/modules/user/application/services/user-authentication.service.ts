@@ -1,7 +1,7 @@
 import { Injectable, Inject, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
 import * as crypto from 'crypto';
-import { TwoFactorAuthService } from '../../../../utils/services/two-factor-auth.service';
+import { TwoFactorAuthService } from './two-factor-auth.service';
 
 import { CorrelationService, LoggerService } from '@leocodeio-njs/njs-logging';
 import { RateLimiterService } from '../../../../utils/services/rate-limiter.service';

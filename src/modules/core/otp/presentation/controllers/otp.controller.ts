@@ -13,7 +13,7 @@ import {
   VerifyMobileConfirmDto,
   VerifyMobileDto,
 } from 'src/modules/core/validation/application/dtos/verify-mobile.dto';
-import { AuthService } from 'src/utils/services/auth.service';
+import { AuthService } from 'src/modules/user/application/services/auth.service';
 import { EmailjsMailerService } from '../../application/services/emailjs-mailer.service';
 import {
   VerifyMailConfirmDto,

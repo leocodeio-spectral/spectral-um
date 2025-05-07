@@ -16,7 +16,7 @@ import { LoginDto } from '../../application/dtos/login.dto';
 import { IpRateLimitGuard } from '@leocodeio-njs/njs-auth';
 import { RefreshTokenDto } from '../../../core/validation/application/dtos/refresh-token.dto';
 import { LogoutDto } from '../../application/dtos/logout.dto';
-import { AuthService } from 'src/utils/services/auth.service';
+import { AuthService } from 'src/modules/user/application/services/auth.service';
 import { LocalAuthGuard } from 'src/utils/guards/local-auth.guard';
 import { JwtAuthGuard } from 'src/utils/guards/jwt-auth.guard';
 import { RegisterDto } from '../../application/dtos/register.dto';
