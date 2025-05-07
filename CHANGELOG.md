@@ -1,3 +1,5 @@
+## [1.1.1](https://github.com/leocodeio-spectral/spectral-um/compare/v1.1.0...v1.1.1) (2025-05-07)
+
 # [1.1.0](https://github.com/leocodeio-spectral/spectral-um/compare/v1.0.5...v1.1.0) (2025-05-07)
 
 
