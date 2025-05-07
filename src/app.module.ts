@@ -17,12 +17,12 @@ import * as Joi from 'joi';
 import { HealthModule, PrometheusService } from '@leocodeio-njs/njs-health';
 
 // modules
-import { ValidationModule } from './modules/core/validation/validation.module';
-import { UserModule } from './modules/user/user-auth.module';
+import { ValidationModule } from './modules/user-module/validation/validation.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
-import { SessionModule } from './modules/core/session/session.module';
-import { OtpModule } from './modules/core/otp/otp.module';
+import { UserModule } from './modules/user-module/user/user-auth.module';
+import { SessionModule } from './modules/common/session/session.module';
+import { OtpModule } from './modules/common/otp/otp.module';
 
 @Module({
   imports: [
