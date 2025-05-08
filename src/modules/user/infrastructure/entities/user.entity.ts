@@ -73,10 +73,10 @@ export class Creator {
 
   @Column('simple-array', { nullable: true })
   backupCodes?: string[];
+
+  @Column({ type: 'text', nullable: false, default: 'creator' })
+  role: 'creator';
 }
-
-
-
 
 @Entity('editors')
 export class Editor {
@@ -143,4 +143,7 @@ export class Editor {
 
   @Column('simple-array', { nullable: true })
   backupCodes?: string[];
+
+  @Column({ type: 'text', nullable: false, default: 'editor' })
+  role: 'editor';
 }

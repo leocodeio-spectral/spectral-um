@@ -19,14 +19,14 @@ export class CreatorRepositoryAdapter implements ICreatorPort {
 
   async findById(id: string): Promise<ICreator | null> {
     const user = await this.repository.findOne({ where: { id } });
-    return user ? this.toDomain(user) : null;
+    return user ? this.toCreatorDomain(user) : null;
   }
 
   async findByIdentifier(identifier: string): Promise<ICreator | null> {
     const user = await this.repository.findOne({
       where: [{ email: identifier }, { mobile: identifier }],
     });
-    return user ? this.toDomain(user) : null;
+    return user ? this.toCreatorDomain(user) : null;
   }
 
   async save(user: Partial<ICreator>): Promise<ICreator> {
@@ -56,7 +56,7 @@ export class CreatorRepositoryAdapter implements ICreatorPort {
     console.log('user creation log 2', entity);
     const savedUser = await this.repository.save(entity);
     console.log('user creation log 3', savedUser);
-    return this.toDomain(savedUser);
+    return this.toCreatorDomain(savedUser);
   }
 
   async update(id: string, user: Partial<ICreator>): Promise<ICreator> {
@@ -65,10 +65,10 @@ export class CreatorRepositoryAdapter implements ICreatorPort {
     if (!updatedUser) {
       throw new Error('User not found');
     }
-    return this.toDomain(updatedUser);
+    return this.toCreatorDomain(updatedUser);
   }
 
-  private toDomain(schema: Editor): ICreator {
+  private toCreatorDomain(schema: Creator): ICreator {
     return {
       id: schema.id,
       email: schema.email,
@@ -86,6 +86,7 @@ export class CreatorRepositoryAdapter implements ICreatorPort {
       accessLevel: schema.accessLevel as AccessLevel,
       createdAt: schema.createdAt,
       updatedAt: schema.updatedAt,
+      role: 'creator',
     };
   }
 }
@@ -98,14 +99,14 @@ export class EditorRepositoryAdapter implements IEditorPort {
 
   async findById(id: string): Promise<IEditor | null> {
     const user = await this.repository.findOne({ where: { id } });
-    return user ? this.toDomain(user) : null;
+    return user ? this.toEditorDomain(user) : null;
   }
 
   async findByIdentifier(identifier: string): Promise<IEditor | null> {
     const user = await this.repository.findOne({
       where: [{ email: identifier }, { mobile: identifier }],
     });
-    return user ? this.toDomain(user) : null;
+    return user ? this.toEditorDomain(user) : null;
   }
 
   async save(user: Partial<IEditor>): Promise<IEditor> {
@@ -135,7 +136,7 @@ export class EditorRepositoryAdapter implements IEditorPort {
     console.log('user creation log 2', entity);
     const savedUser = await this.repository.save(entity);
     console.log('user creation log 3', savedUser);
-    return this.toDomain(savedUser);
+    return this.toEditorDomain(savedUser);
   }
 
   async update(id: string, user: Partial<IEditor>): Promise<IEditor> {
@@ -144,10 +145,10 @@ export class EditorRepositoryAdapter implements IEditorPort {
     if (!updatedUser) {
       throw new Error('User not found');
     }
-    return this.toDomain(updatedUser);
+    return this.toEditorDomain(updatedUser);
   }
 
-  private toDomain(schema: Editor): IEditor {
+  private toEditorDomain(schema: Editor): IEditor {
     return {
       id: schema.id,
       email: schema.email,
@@ -165,6 +166,7 @@ export class EditorRepositoryAdapter implements IEditorPort {
       accessLevel: schema.accessLevel as AccessLevel,
       createdAt: schema.createdAt,
       updatedAt: schema.updatedAt,
+      role: 'editor',
     };
   }
 }

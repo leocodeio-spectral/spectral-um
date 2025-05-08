@@ -20,6 +20,7 @@ export class ICreator {
   backupCodes?: string[];
   createdAt: Date;
   updatedAt: Date;
+  role: 'creator';
 }
 
 export class IEditor {
@@ -41,4 +42,5 @@ export class IEditor {
   backupCodes?: string[];
   createdAt: Date;
   updatedAt: Date;
+  role: 'editor' ;
 }
