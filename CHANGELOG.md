@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/leocodeio-spectral/spectral-um/compare/v1.2.1...v1.2.2) (2025-05-10)
+
+
+### Bug Fixes
+
+* **updated mail otp flow:** updated mail otp flow ([7ca4c4c](https://github.com/leocodeio-spectral/spectral-um/commit/7ca4c4c6984d95e826a7f7c5fdd12c58c13ae7c2))
+
 ## [1.2.1](https://github.com/leocodeio-spectral/spectral-um/compare/v1.2.0...v1.2.1) (2025-05-10)
 
 
