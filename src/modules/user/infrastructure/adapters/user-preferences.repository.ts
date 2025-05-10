@@ -58,7 +58,7 @@ export class CreatorPreferencesRepositoryAdapter
   private toDomain(schema: CreatorPreferences): ICreatorPreferences {
     return {
       id: schema.id,
-      userId: schema.creatorId,
+      creatorId: schema.creatorId,
       language: schema.language!,
       theme: schema.theme!,
       timeZone: schema.timeZone!,
@@ -109,7 +109,7 @@ export class EditorPreferencesRepositoryAdapter
   private toDomain(schema: EditorPreferences): IEditorPreferences {
     return {
       id: schema.id,
-      userId: schema.editorId,
+      editorId: schema.editorId,
       language: schema.language!,
       theme: schema.theme!,
       timeZone: schema.timeZone!,

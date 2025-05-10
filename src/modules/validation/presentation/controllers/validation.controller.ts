@@ -25,7 +25,10 @@ import {
   CreatorAuthService,
   EditorAuthService,
 } from 'src/modules/user/application/services/auth.service';
-import { JwtAuthGuard } from 'src/modules/user/presentation/guards/jwt-auth.guard';
+import {
+  CreatorJwtAuthGuard,
+  EditorJwtAuthGuard,
+} from 'src/modules/user/presentation/guards/jwt-auth.guard';
 
 @ApiSecurity('x-api-key')
 @ApiSecurity('Authorization')
@@ -70,7 +73,7 @@ export class CreatorValidationController {
 
   // IsAcessTokenValid
   // IsRefreshTokenValid
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(CreatorJwtAuthGuard)
   @ApiOperation({ summary: 'User validate' })
   @Post('acesstoken')
   @UseFilters(AuthExceptionFilter)
@@ -137,7 +140,7 @@ export class EditorValidationController {
 
   // IsAcessTokenValid
   // IsRefreshTokenValid
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(EditorJwtAuthGuard)
   @ApiOperation({ summary: 'User validate' })
   @Post('acesstoken')
   @UseFilters(AuthExceptionFilter)

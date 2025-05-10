@@ -14,16 +14,16 @@ import {
 @Injectable()
 export class CreatorRepositoryAdapter implements ICreatorPort {
   constructor(
-    @Inject(CREATOR_REPOSITORY) private repository: Repository<Creator>,
+    @Inject(CREATOR_REPOSITORY) private creatorRepository: Repository<Creator>,
   ) {}
 
   async findById(id: string): Promise<ICreator | null> {
-    const user = await this.repository.findOne({ where: { id } });
+    const user = await this.creatorRepository.findOne({ where: { id } });
     return user ? this.toCreatorDomain(user) : null;
   }
 
   async findByIdentifier(identifier: string): Promise<ICreator | null> {
-    const user = await this.repository.findOne({
+    const user = await this.creatorRepository.findOne({
       where: [{ email: identifier }, { mobile: identifier }],
     });
     return user ? this.toCreatorDomain(user) : null;
@@ -52,16 +52,17 @@ export class CreatorRepositoryAdapter implements ICreatorPort {
     //   timeZone: dto.timeZone,
     // });
     console.log('user creation log 1', user);
-    const entity = this.repository.create(user);
+    const entity = this.creatorRepository.create(user);
     console.log('user creation log 2', entity);
-    const savedUser = await this.repository.save(entity);
+    const savedUser = await this.creatorRepository.save(entity);
     console.log('user creation log 3', savedUser);
     return this.toCreatorDomain(savedUser);
   }
 
   async update(id: string, user: Partial<ICreator>): Promise<ICreator> {
-    await this.repository.update(id, user);
-    const updatedUser = await this.repository.findOne({ where: { id } });
+    await this.creatorRepository.update(id, user);
+    const updatedUser = await this.creatorRepository.findOne({ where: { id } });
+    console.log('user update log 1', updatedUser);
     if (!updatedUser) {
       throw new Error('User not found');
     }
@@ -94,16 +95,16 @@ export class CreatorRepositoryAdapter implements ICreatorPort {
 @Injectable()
 export class EditorRepositoryAdapter implements IEditorPort {
   constructor(
-    @Inject(EDITOR_REPOSITORY) private repository: Repository<Editor>,
+    @Inject(EDITOR_REPOSITORY) private editorRepository: Repository<Editor>,
   ) {}
 
   async findById(id: string): Promise<IEditor | null> {
-    const user = await this.repository.findOne({ where: { id } });
+    const user = await this.editorRepository.findOne({ where: { id } });
     return user ? this.toEditorDomain(user) : null;
   }
 
   async findByIdentifier(identifier: string): Promise<IEditor | null> {
-    const user = await this.repository.findOne({
+    const user = await this.editorRepository.findOne({
       where: [{ email: identifier }, { mobile: identifier }],
     });
     return user ? this.toEditorDomain(user) : null;
@@ -132,16 +133,26 @@ export class EditorRepositoryAdapter implements IEditorPort {
     //   timeZone: dto.timeZone,
     // });
     console.log('user creation log 1', user);
-    const entity = this.repository.create(user);
+    const entity = this.editorRepository.create(user);
     console.log('user creation log 2', entity);
-    const savedUser = await this.repository.save(entity);
+    const savedUser = await this.editorRepository.save(entity);
     console.log('user creation log 3', savedUser);
     return this.toEditorDomain(savedUser);
   }
 
   async update(id: string, user: Partial<IEditor>): Promise<IEditor> {
-    await this.repository.update(id, user);
-    const updatedUser = await this.repository.findOne({ where: { id } });
+    console.log('user update log 0', user);
+    console.log('user update log 1', id);
+    const userToUpdate = await this.editorRepository.findOne({
+      where: { id },
+    });
+    console.log('user update log 2', userToUpdate);
+    await this.editorRepository.update(id, {
+      ...userToUpdate,
+      ...user,
+    });
+    const updatedUser = await this.editorRepository.findOne({ where: { id } });
+    console.log('user update log 4', updatedUser);
     if (!updatedUser) {
       throw new Error('User not found');
     }

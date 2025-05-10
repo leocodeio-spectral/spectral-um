@@ -6,10 +6,10 @@ import { TokenPayload } from 'src/utils/types/token';
 import { ISessionPort } from 'src/modules/session/domain/ports/session.port';
 
 @Injectable()
-export class CreatorJwtStrategy extends PassportStrategy(Strategy) {
+export class CreatorJwtStrategy extends PassportStrategy(Strategy, 'creator-jwt') {
   constructor(
     private readonly sessionRepository: ISessionPort,
-    configService: ConfigService,
+    configService: ConfigService, 
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -44,7 +44,10 @@ export class CreatorJwtStrategy extends PassportStrategy(Strategy) {
 }
 
 @Injectable()
-export class EditorJwtStrategy extends PassportStrategy(Strategy) {
+export class EditorJwtStrategy extends PassportStrategy(
+  Strategy,
+  'editor-jwt',
+) {
   constructor(
     private readonly sessionRepository: ISessionPort,
     configService: ConfigService,

@@ -1,6 +1,6 @@
 export class ICreatorPreferences {
   id: string;
-  userId: string;
+  creatorId: string;
   theme: string;
   language: string;
   timeZone: string;
@@ -10,7 +10,7 @@ export class ICreatorPreferences {
 
 export class IEditorPreferences {
   id: string;
-  userId: string;
+  editorId: string;
   theme: string;
   language: string;
   timeZone: string;

@@ -74,6 +74,7 @@ export class CreatorAuthenticationService {
       correlationId: this.correlationService.getCorrelationId(),
     });
 
+    console.log(2);
     if (!user.allowedChannels.includes(loginDto.channel)) {
       this.logger.warn('Unauthorized channel access attempt', {
         userId: user.id,
@@ -82,7 +83,7 @@ export class CreatorAuthenticationService {
       });
       throw new UnauthorizedException('Channel not authorized');
     }
-
+    console.log(3);
     // Handle 2FA if enabled
     if (user.twoFactorEnabled) {
       if (!loginDto.twoFactorCode) {
@@ -114,6 +115,7 @@ export class CreatorAuthenticationService {
     const tokenFamily = crypto.randomUUID();
 
     // Generate tokens
+    console.log(4);
     const [accessToken, refreshToken] = await Promise.all([
       this.tokenManagementService.generateAccessToken(
         user,
@@ -126,7 +128,7 @@ export class CreatorAuthenticationService {
         tokenFamily,
       ),
     ]);
-
+    console.log(5);
     // Create session
     await this.sessionManagementService.createSession({
       id: sessionId,
@@ -136,19 +138,19 @@ export class CreatorAuthenticationService {
       refreshTokenFamily: tokenFamily,
       userAgent: loginDto.userAgent,
     });
-
+    console.log(6);
     // Update user's last login timestamp
     await this.userRepository.update(user.id, {
       lastLoginAt: new Date(),
     });
-
+    console.log(7);
     this.logger.debug('Login successful', {
       userId: user.id,
       sessionId,
       channel: loginDto.channel,
       correlationId: this.correlationService.getCorrelationId(),
     });
-
+    console.log(8);
     return {
       access_token: accessToken,
       refresh_token: refreshToken,

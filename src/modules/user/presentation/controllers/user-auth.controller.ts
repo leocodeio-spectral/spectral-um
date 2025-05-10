@@ -31,12 +31,17 @@ import {
   CreatorAuthService,
   EditorAuthService,
 } from '../../application/services/auth.service';
-import { LocalAuthGuard } from '../guards/local-auth.guard';
-import { JwtAuthGuard } from '../guards/jwt-auth.guard';
+import {
+  EditorLocalAuthGuard,
+  CreatorLocalAuthGuard,
+} from '../guards/local-auth.guard';
+import {
+  EditorJwtAuthGuard,
+  CreatorJwtAuthGuard,
+} from '../guards/jwt-auth.guard';
 import { RefreshTokenDto } from 'src/modules/validation/application/dtos/refresh-token.dto';
 
 @UseGuards(IpRateLimitGuard)
-@UseGuards(ApiKeyGuard)
 @ApiSecurity('x-api-key')
 @ApiSecurity('Authorization')
 @Controller('creator')
@@ -49,14 +54,14 @@ export class CreatorAuthController {
     return await this.creatorAuthService.register(registerDto);
   }
 
-  @UseGuards(LocalAuthGuard)
+  @UseGuards(CreatorLocalAuthGuard)
   @ApiOperation({ summary: 'User login' })
   @Post('login')
   async login(@Req() req: Request, @Body() loginDto: LoginDto) {
     return this.creatorAuthService.login(req.user, loginDto);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(CreatorJwtAuthGuard)
   @ApiOperation({ summary: 'Fetch user profile' })
   @Get('me')
   @ApiResponse({
@@ -146,14 +151,14 @@ export class EditorAuthController {
     return await this.editorAuthService.register(registerDto);
   }
 
-  @UseGuards(LocalAuthGuard)
+  @UseGuards(EditorLocalAuthGuard)
   @ApiOperation({ summary: 'User login' })
   @Post('login')
   async login(@Req() req: Request, @Body() loginDto: LoginDto) {
     return this.editorAuthService.login(req.user, loginDto);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(EditorJwtAuthGuard)
   @ApiOperation({ summary: 'Fetch user profile' })
   @Get('me')
   @ApiResponse({

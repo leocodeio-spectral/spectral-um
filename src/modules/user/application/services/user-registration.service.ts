@@ -36,6 +36,7 @@ export class CreatorRegistrationService {
   ) {}
 
   async register(dto: RegisterDto): Promise<UserProfileDto> {
+    console.log(3);
     // validation checks
     const emailUsed = await this.userPort.findByIdentifier(dto.email);
     if (emailUsed) {
@@ -65,7 +66,8 @@ export class CreatorRegistrationService {
       this.configService.get<boolean>('MAIL_VERIFICATION') &&
       (dto.channel === 'email' || dto.channel === 'web')
     ) {
-      const isValid = this.emailjsMailerService.verifyOtpMail(
+      console.log(4);
+      const isValid = await this.emailjsMailerService.verifyOtpMail(
         dto.email,
         dto.mailVerificationCode!,
       );
@@ -76,6 +78,7 @@ export class CreatorRegistrationService {
     }
 
     // Hash password
+    console.log(5);
     const passwordHash = await this.hashPassword(dto.password);
 
     // Determine access level
@@ -90,7 +93,7 @@ export class CreatorRegistrationService {
       allowedChannels: ['mobile', 'web'],
       twoFactorEnabled: false,
     } as ICreator);
-
+    console.log(6);
     const user = await this.userPort.save({
       email: dto.email,
       mobile: dto.mobile,
@@ -103,18 +106,18 @@ export class CreatorRegistrationService {
       accessLevel: accessLevel,
       twoFactorEnabled: false,
     });
-
+    console.log(7);
     const userPreferences = await this.userPrefPort.save({
-      userId: user.id,
+      creatorId: user.id,
       language: dto.language,
       theme: dto.theme,
       timeZone: dto.timeZone,
     });
-
+    console.log(8);
     if (!userPreferences) {
       throw new UnauthorizedException('User preferences not found');
     }
-
+    console.log(9);
     return {
       id: user.id,
       email: user.email,
@@ -269,7 +272,7 @@ export class EditorRegistrationService {
     });
 
     const userPreferences = await this.userPrefPort.save({
-      userId: user.id,
+      editorId: user.id,
       language: dto.language,
       theme: dto.theme,
       timeZone: dto.timeZone,

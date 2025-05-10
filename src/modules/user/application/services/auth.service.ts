@@ -97,12 +97,13 @@ export class CreatorAuthService {
       channel: loginDto.channel,
       correlationId: this.correlationService.getCorrelationId(),
     });
-
+    console.log(1);
     return this.userAuthService.login(user, loginDto);
   }
 
   // create new user
   async register(dto: RegisterDto): Promise<UserProfileDto> {
+    console.log(2);
     return this.userRegistrationService.register(dto);
   }
 
