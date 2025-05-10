@@ -1,3 +1,15 @@
+## [1.2.1](https://github.com/leocodeio-spectral/spectral-um/compare/v1.2.0...v1.2.1) (2025-05-10)
+
+
+### Bug Fixes
+
+* **revisti signup and signin flows:** revisti signup and signin flows ([abc7148](https://github.com/leocodeio-spectral/spectral-um/commit/abc714879c23429fff601873e2aee3c41ab26edc))
+
+
+### Performance Improvements
+
+* **added role:** added role ([c6e3a7f](https://github.com/leocodeio-spectral/spectral-um/commit/c6e3a7fc4d22204bb22efdf9a8e48e732e24f081))
+
 # [1.2.0](https://github.com/leocodeio-spectral/spectral-um/compare/v1.1.1...v1.2.0) (2025-05-07)
 
 
