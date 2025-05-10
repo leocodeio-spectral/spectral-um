@@ -1,4 +1,4 @@
-import { Injectable, Inject, UnauthorizedException } from '@nestjs/common';
+import { Injectable, Inject, UnauthorizedException, NotFoundException } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
 import * as crypto from 'crypto';
 import {
@@ -49,7 +49,7 @@ export class CreatorAuthenticationService {
         identifier,
         correlationId: this.correlationService.getCorrelationId(),
       });
-      throw new UnauthorizedException('Invalid credentials');
+      throw new NotFoundException('Invalid credentials');
     }
 
     const isValid = await bcrypt.compare(password, user.passwordHash);
@@ -249,7 +249,7 @@ export class EditorAuthenticationService {
         identifier,
         correlationId: this.correlationService.getCorrelationId(),
       });
-      throw new UnauthorizedException('Invalid credentials');
+      throw new NotFoundException('Invalid credentials');
     }
 
     const isValid = await bcrypt.compare(password, user.passwordHash);

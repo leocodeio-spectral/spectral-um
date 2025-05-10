@@ -390,29 +390,39 @@ export class CreatorAuthService {
       channel: dto.channel,
       correlationId: this.correlationService.getCorrelationId(),
     });
+    console.log('hello');
 
     // Verify user exists with complete profile
     const user = await this.userPort.findByIdentifier(dto.mail);
     if (!user) {
       throw new UnauthorizedException('User not found');
     }
+    console.log('hello');
 
     if (!user.email || !user.mobile) {
       throw new UnauthorizedException(
         'Incomplete registration. Please complete registration with both email and mobile number.',
       );
     }
+    console.log('hello');
 
     // Verify OTP using the new service
-    const isValid = this.otpService.verifyToken(
+    // const isValid = this.otpService.verifyToken(
+    //   dto.mail,
+    //   this.configService.get('TOPT_SECRET') || 'default-salt',
+    //   dto.otp,
+    // );
+    const isValid = await this.emailjsMailerService.verifyOtpMail(
       dto.mail,
-      this.configService.get('TOPT_SECRET') || 'default-salt',
       dto.otp,
     );
+    console.log('isvalid', isValid);
+    console.log('hello');
 
     if (!isValid) {
       throw new UnauthorizedException('Invalid verification code');
     }
+    console.log('hello');
 
     // Create session and tokens
     const sessionId = crypto.randomUUID();

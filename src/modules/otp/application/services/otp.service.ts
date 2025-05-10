@@ -38,17 +38,21 @@ export class OtpService {
    * @returns boolean indicating if OTP is valid
    */
   verifyToken(key: string, salt: string, token: string): boolean {
+    console.log('hello');
+    console.log(token);
+    console.log(key);
+    console.log(salt);
     if (token.length !== 6 || !/^\d{6}$/.test(token)) {
       return false;
     }
 
     const currentToken = this.generateToken(key, salt);
-
+    console.log(currentToken);
     // Check current window
     if (token === currentToken) {
       return true;
     }
-
+    console.log('hello');
     // Check previous window (to account for delay in transmission)
     const timestamp = Math.floor(Date.now() / 1000);
     const prevCounter = Math.floor(
@@ -65,7 +69,7 @@ export class OtpService {
       prevHash[prevOffset + 3];
 
     const prevToken = (prevCode % 1000000).toString().padStart(6, '0');
-
+    console.log(prevToken);
     return token === prevToken;
   }
 }

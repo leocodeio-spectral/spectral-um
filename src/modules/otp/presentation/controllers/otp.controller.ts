@@ -85,7 +85,7 @@ export class CreatorOtpController {
   @HttpCode(HttpStatus.OK)
   async confirmMailVerification(@Body() dto: VerifyMailConfirmDto) {
     // Verify OTP using the new service
-    const isValid = this.emailjsMailerService.verifyOtpMail(
+    const isValid = await this.emailjsMailerService.verifyOtpMail(
       dto.email,
       dto.code,
     );
@@ -161,7 +161,7 @@ export class EditorOtpController {
   @HttpCode(HttpStatus.OK)
   async confirmMailVerification(@Body() dto: VerifyMailConfirmDto) {
     // Verify OTP using the new service
-    const isValid = this.emailjsMailerService.verifyOtpMail(
+    const isValid = await this.emailjsMailerService.verifyOtpMail(
       dto.email,
       dto.code,
     );

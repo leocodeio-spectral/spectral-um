@@ -128,6 +128,7 @@ export class CreatorAuthController {
   @Post('mail/login/verify')
   @HttpCode(HttpStatus.OK)
   async completeMailLogin(@Body() dto: CompleteMailLoginDto) {
+    console.log('hello');
     return this.creatorAuthService.completeMailLogin(dto);
   }
 

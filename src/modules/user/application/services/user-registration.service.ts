@@ -232,7 +232,7 @@ export class EditorRegistrationService {
       this.configService.get<boolean>('MAIL_VERIFICATION') &&
       (dto.channel === 'email' || dto.channel === 'web')
     ) {
-      const isValid = this.emailjsMailerService.verifyOtpMail(
+      const isValid = await this.emailjsMailerService.verifyOtpMail(
         dto.email,
         dto.mailVerificationCode!,
       );
