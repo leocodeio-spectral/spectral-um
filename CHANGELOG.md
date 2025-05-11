@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/leocodeio-spectral/spectral-um/compare/v1.2.2...v1.3.0) (2025-05-11)
+
+
+### Features
+
+* **auth complete:** auth complete ([3aaddd5](https://github.com/leocodeio-spectral/spectral-um/commit/3aaddd534c579eeb6932786e6e2885ee22a53dcd))
+
 ## [1.2.2](https://github.com/leocodeio-spectral/spectral-um/compare/v1.2.1...v1.2.2) (2025-05-10)
 
 
