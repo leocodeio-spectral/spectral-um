@@ -230,6 +230,7 @@ export class CreatorAuthService {
       accessLevel: user.accessLevel,
       lastLoginAt: user.lastLoginAt,
       createdAt: user.createdAt,
+      role: user.role,
     };
   }
 
@@ -648,6 +649,7 @@ export class EditorAuthService {
       accessLevel: user.accessLevel,
       lastLoginAt: user.lastLoginAt,
       createdAt: user.createdAt,
+      role: user.role,
     };
   }
 

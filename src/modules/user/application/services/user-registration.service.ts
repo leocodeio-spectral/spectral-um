@@ -132,6 +132,7 @@ export class CreatorRegistrationService {
       twoFactorEnabled: user.twoFactorEnabled,
       allowedChannels: user.allowedChannels,
       createdAt: user.createdAt,
+      role: user.role,
     };
   }
 
@@ -182,6 +183,7 @@ export class CreatorRegistrationService {
       allowedChannels: updatedUser.allowedChannels,
       accessLevel: updatedUser.accessLevel,
       createdAt: updatedUser.createdAt,
+      role: updatedUser.role,
     };
   }
 
@@ -296,6 +298,7 @@ export class EditorRegistrationService {
       twoFactorEnabled: user.twoFactorEnabled,
       allowedChannels: user.allowedChannels,
       createdAt: user.createdAt,
+      role: user.role,
     };
   }
 
@@ -346,6 +349,7 @@ export class EditorRegistrationService {
       allowedChannels: updatedUser.allowedChannels,
       accessLevel: updatedUser.accessLevel,
       createdAt: updatedUser.createdAt,
+      role: updatedUser.role,
     };
   }
 

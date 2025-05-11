@@ -88,4 +88,10 @@ export class UserProfileDto {
     example: '2024-01-01T00:00:00Z',
   })
   createdAt: Date;
+
+  @ApiProperty({
+    description: 'User role',
+    example: 'creator',
+  })
+  role: string;
 }
