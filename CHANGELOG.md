@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/leocodeio-spectral/spectral-um/compare/v1.3.0...v1.4.0) (2025-05-16)
+
+
+### Features
+
+* **will make this solo repo for whole backend:** will make this solo repo for whole backend ([6b6fcb6](https://github.com/leocodeio-spectral/spectral-um/commit/6b6fcb63df3ac1092be3c8db35dfa9dad2088f2c))
+
 # [1.3.0](https://github.com/leocodeio-spectral/spectral-um/compare/v1.2.2...v1.3.0) (2025-05-11)
 
 
