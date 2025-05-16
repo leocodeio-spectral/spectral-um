@@ -20,12 +20,18 @@ import { HealthModule, PrometheusService } from '@leocodeio-njs/njs-health';
 import {
   CreatorValidationModule,
   EditorValidationModule,
-} from './modules/validation/validation.module';
+} from './auth/modules/validation/validation.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
-import { CreatorModule, EditorModule } from './modules/user/user-auth.module';
-import { SessionModule } from './modules/session/session.module';
-import { CreatorOtpModule, EditorOtpModule } from './modules/otp/otp.module';
+import {
+  CreatorModule,
+  EditorModule,
+} from './auth/modules/user/user-auth.module';
+import { SessionModule } from './auth/modules/session/session.module';
+import {
+  CreatorOtpModule,
+  EditorOtpModule,
+} from './auth/modules/otp/otp.module';
 
 @Module({
   imports: [
