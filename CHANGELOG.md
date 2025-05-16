@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/leocodeio-spectral/spectral-um/compare/v1.4.0...v1.5.0) (2025-05-16)
+
+
+### Features
+
+* **added media:** added media ([0554c6d](https://github.com/leocodeio-spectral/spectral-um/commit/0554c6d06d9d6d957d045b5b08985fe7fdfa15e9))
+
 # [1.4.0](https://github.com/leocodeio-spectral/spectral-um/compare/v1.3.0...v1.4.0) (2025-05-16)
 
 
