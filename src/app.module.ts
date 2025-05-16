@@ -32,6 +32,8 @@ import {
   CreatorOtpModule,
   EditorOtpModule,
 } from './auth/modules/otp/otp.module';
+import { S3Module } from './media/libs/s3/s3.module';
+import { MediaModule } from './media/modules/media/media.module';
 
 @Module({
   imports: [
@@ -108,6 +110,16 @@ import {
           .default('this-is-refresh-token-secret')
           .required(),
         JWT_REFRESH_EXPIRES_IN: Joi.string().default('7d').required(),
+
+        // aws
+        AWS_REGION: Joi.string().default('us-east-1').required(),
+        AWS_ACCESS_KEY_ID: Joi.string().default('test').required(),
+        AWS_SECRET_ACCESS_KEY: Joi.string().default('test').required(),
+        AWS_S3_BUCKET_NAME: Joi.string().default('my-local-bucket').required(),
+        AWS_S3_ENDPOINT: Joi.string()
+          .default('http://localhost:4566')
+          .required(),
+        AWS_S3_FOLDER_NAME: Joi.string().default('media').required(),
       }),
     }),
     AppConfigModule,
@@ -134,6 +146,7 @@ import {
         },
       },
     }),
+    // auth
     EditorOtpModule,
     CreatorOtpModule,
     CreatorValidationModule,
@@ -142,6 +155,10 @@ import {
     CreatorModule,
     EditorModule,
     SessionModule,
+
+    // media
+    S3Module,
+    MediaModule,
     JwtModule.registerAsync({
       global: true,
       imports: [ConfigModule],
