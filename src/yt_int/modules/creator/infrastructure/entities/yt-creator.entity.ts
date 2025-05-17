@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 import { YtCreatorStatus } from '../../domain/enums/yt-creator-status.enum';
 
-@Entity({ name: 'yt_creator' })
+@Entity({ name: 'creator_account_map' })
 export class YtCreatorEntity {
   @PrimaryGeneratedColumn('uuid')
   @Generated('uuid')

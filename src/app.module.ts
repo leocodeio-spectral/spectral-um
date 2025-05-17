@@ -36,6 +36,7 @@ import { S3Module } from './media/libs/s3/s3.module';
 import { MediaModule } from './media/modules/media/media.module';
 import { YtAuthModule } from './yt_int/modules/youtube/yt-auth.module';
 import { YtCreatorModule } from './yt_int/modules/creator/yt-creator.module';
+import { MapModule } from './map/modules/map/map.module';
 
 @Module({
   imports: [
@@ -166,6 +167,9 @@ import { YtCreatorModule } from './yt_int/modules/creator/yt-creator.module';
     YtAuthModule,
     YtCreatorModule,
 
+    // map
+    MapModule,
+    
     JwtModule.registerAsync({
       global: true,
       imports: [ConfigModule],

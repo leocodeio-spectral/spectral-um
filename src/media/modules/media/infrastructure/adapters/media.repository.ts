@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { IMediaPort } from '../../domain/ports/media.port';
-import { IMedia } from '../../domain/models/media.port';
+import { IMedia } from '../../domain/models/media.model';
 import { DataSource } from 'typeorm';
 import { Media } from '../entities/media.entity';
 import { S3Service } from '../../../../libs/s3/application/services/s3.service';

@@ -11,7 +11,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { MediaService } from '../../application/services/media.service';
-import { IMedia } from '../../domain/models/media.port';
+import { IMedia } from '../../domain/models/media.model';
 import { CreateMediaDto } from '../../application/dtos/create-media.dto';
 import { UpdateMediaDto } from '../../application/dtos/update-media.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -44,8 +44,14 @@ export class MediaController {
           format: 'binary',
           description: 'File to upload',
         },
-        userId: { type: 'uuid', example: 'd7559eb1-e7c0-41c2-bbc9-ac826b484c83' },
-        accountId: { type: 'uuid', example: 'd7559eb1-e7c0-41c2-bbc9-ac826b484c83' },
+        userId: {
+          type: 'uuid',
+          example: 'd7559eb1-e7c0-41c2-bbc9-ac826b484c83',
+        },
+        accountId: {
+          type: 'uuid',
+          example: 'd7559eb1-e7c0-41c2-bbc9-ac826b484c83',
+        },
         type: { type: 'string', example: 'image' },
       },
     },

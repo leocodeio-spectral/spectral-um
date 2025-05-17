@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -7,69 +6,84 @@ import {
   Param,
   Post,
   Put,
-  UploadedFile,
-  UseInterceptors,
 } from '@nestjs/common';
-import { MediaService } from '../../application/services/media.service';
-import { IMedia } from '../../domain/models/media.port';
-import { CreateMediaDto } from '../../application/dtos/create-media.dto';
-import { UpdateMediaDto } from '../../application/dtos/update-media.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiBody, ApiConsumes } from '@nestjs/swagger';
+// creator editor
+import { CreatorEditorMapService } from '../../application/services/map.service';
+import { CreateCreatorEditorMapDto } from '../../application/dtos/create-creator-editor-map.dto';
+import { UpdateCreatorEditorMapDto } from '../../application/dtos/update-creator-editor-map.dto';
 
-@Controller('media')
-export class MediaController {
-  constructor(private readonly mediaService: MediaService) {}
+// account editor
+import { AccountEditorMapService } from '../../application/services/map.service';
+import { CreateAccountEditorMapDto } from '../../application/dtos/create-account-editor-map.dto';
+import { UpdateAccountEditorMapDto } from '../../application/dtos/update-account-editor-map.dto';
+
+@Controller('creator-editor-map')
+export class CreatorEditorMapController {
+  constructor(
+    private readonly creatorEditorMapService: CreatorEditorMapService,
+  ) {}
 
   @Get()
   async findAll() {
-    return this.mediaService.findAll();
+    return this.creatorEditorMapService.findAll();
   }
 
   @Get(':id')
   async findById(@Param('id') id: string) {
-    return this.mediaService.findById(id);
+    return this.creatorEditorMapService.findById(id);
   }
 
   @Post()
-  @UseInterceptors(FileInterceptor('file'))
-  @ApiConsumes('multipart/form-data')
-  @ApiBody({
-    description: 'Upload a file',
-    schema: {
-      type: 'object',
-      properties: {
-        file: {
-          type: 'string',
-          format: 'binary',
-          description: 'File to upload',
-        },
-        userId: { type: 'uuid', example: 'd7559eb1-e7c0-41c2-bbc9-ac826b484c83' },
-        accountId: { type: 'uuid', example: 'd7559eb1-e7c0-41c2-bbc9-ac826b484c83' },
-        type: { type: 'string', example: 'image' },
-      },
-    },
-  })
-  async create(
-    @Body() createMediaDto: CreateMediaDto,
-    @UploadedFile() file: Express.Multer.File,
-  ) {
-    if (!file) {
-      throw new BadRequestException('No file uploaded');
-    }
-    return this.mediaService.create(createMediaDto, file);
+  async create(@Body() createCreatorEditorMapDto: CreateCreatorEditorMapDto) {
+    return this.creatorEditorMapService.create(createCreatorEditorMapDto);
   }
 
   @Put(':id')
   async update(
     @Param('id') id: string,
-    @Body() updateMediaDto: UpdateMediaDto,
+    @Body() updateCreatorEditorMapDto: UpdateCreatorEditorMapDto,
   ) {
-    return this.mediaService.update(id, updateMediaDto);
+    return this.creatorEditorMapService.update(id, updateCreatorEditorMapDto);
   }
 
   @Delete(':id')
   async delete(@Param('id') id: string) {
-    return this.mediaService.delete(id);
+    return this.creatorEditorMapService.delete(id);
+  }
+}
+
+// account - editor map
+@Controller('account-editor-map')
+export class AccountEditorMapController {
+  constructor(
+    private readonly accountEditorMapService: AccountEditorMapService,
+  ) {}
+
+  @Get()
+  async findAll() {
+    return this.accountEditorMapService.findAll();
+  }
+
+  @Get(':id')
+  async findById(@Param('id') id: string) {
+    return this.accountEditorMapService.findById(id);
+  }
+
+  @Post()
+  async create(@Body() createAccountEditorMapDto: CreateAccountEditorMapDto) {
+    return this.accountEditorMapService.create(createAccountEditorMapDto);
+  }
+
+  @Put(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateAccountEditorMapDto: UpdateAccountEditorMapDto,
+  ) {
+    return this.accountEditorMapService.update(id, updateAccountEditorMapDto);
+  }
+
+  @Delete(':id')
+  async delete(@Param('id') id: string) {
+    return this.accountEditorMapService.delete(id);
   }
 }

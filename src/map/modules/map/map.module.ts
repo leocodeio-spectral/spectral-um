@@ -1,17 +1,30 @@
 import { Module } from '@nestjs/common';
-import { MapService } from './application/services/map.service';
-import { MapController } from './presentation/controllers/map.controller';
-import { IMapPort } from './domain/ports/map.port';
-import { MapRepositoryAdapter } from './infrastructure/adapters/map.repository';
+
+// creator editor map
+import { CreatorEditorMapService } from './application/services/map.service';
+import { CreatorEditorMapController } from './presentation/controllers/map.controller';
+import { ICreatorEditorMapPort } from './domain/ports/creator-editor-map.port';
+import { CreatorEditorMapRepositoryAdapter } from './infrastructure/adapters/map.repository';
+
+// account editor map
+import { AccountEditorMapService } from './application/services/map.service';
+import { AccountEditorMapController } from './presentation/controllers/map.controller';
+import { IAccountEditorMapPort } from './domain/ports/account-editor-map.port';
+import { AccountEditorMapRepositoryAdapter } from './infrastructure/adapters/map.repository';
 
 @Module({
   imports: [],
-  controllers: [MapController],
+  controllers: [CreatorEditorMapController, AccountEditorMapController],
   providers: [
-    MapService,
+    CreatorEditorMapService,
     {
-      provide: IMapPort,
-      useClass: MapRepositoryAdapter,
+      provide: ICreatorEditorMapPort,
+      useClass: CreatorEditorMapRepositoryAdapter,
+    },
+    AccountEditorMapService,
+    {
+      provide: IAccountEditorMapPort,
+      useClass: AccountEditorMapRepositoryAdapter,
     },
   ],
 })

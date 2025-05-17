@@ -1,29 +1,32 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { IMapPort } from '../../domain/ports/map.port';
-import { IMap } from '../../domain/models/map.port';
+// creator editor
+import { ICreatorEditorMap } from '../../domain/models/creator-editor-map.model';
+import { ICreatorEditorMapPort } from '../../domain/ports/creator-editor-map.port';
 import { DataSource } from 'typeorm';
-import { Map } from '../entities/map.entity';
-import { S3Service } from '../../../../libs/s3/application/services/s3.service';
-import { ConfigService } from '@nestjs/config';
-import { randomUUID } from 'node:crypto';
+import { CreatorEditorMap } from '../entities/creator-editor-map.entity';
+
+// account editor
+import { IAccountEditorMap } from '../../domain/models/account-editor-map.model';
+import { IAccountEditorMapPort } from '../../domain/ports/account-editor-map.port';
+import { AccountEditorMap } from '../entities/account-editor-map.entity';
 
 @Injectable()
-export class MediaRepositoryAdapter implements IMediaPort {
-  constructor(
-    private readonly dataSource: DataSource,
-    private readonly s3Service: S3Service,
-    private readonly configService: ConfigService,
-  ) {}
+export class CreatorEditorMapRepositoryAdapter
+  implements ICreatorEditorMapPort
+{
+  constructor(private readonly dataSource: DataSource) {}
 
-  async findAll(): Promise<IMedia[]> {
+  async findAll(): Promise<ICreatorEditorMap[]> {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
     try {
       const manager = queryRunner.manager;
-      const result = await manager.find(Media);
+      const result = await manager.find(CreatorEditorMap);
       await queryRunner.commitTransaction();
-      return result.map((media) => this.toDomain(media));
+      return result.map((creatorEditorMap) =>
+        this.toCreatorEditorMapDomain(creatorEditorMap),
+      );
     } catch (error) {
       await queryRunner.rollbackTransaction();
       throw error;
@@ -32,17 +35,63 @@ export class MediaRepositoryAdapter implements IMediaPort {
     }
   }
 
-  async findById(id: string): Promise<IMedia | null> {
+  async findById(id: string): Promise<ICreatorEditorMap | null> {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
     try {
       const manager = queryRunner.manager;
-      const result = await manager.findOne(Media, {
+      const result = await manager.findOne(CreatorEditorMap, {
         where: { id },
       });
       await queryRunner.commitTransaction();
-      return result ? this.toDomain(result) : null;
+      return result ? this.toCreatorEditorMapDomain(result) : null;
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
+  }
+
+  async findByCreatorId(creatorId: string): Promise<ICreatorEditorMap[]> {
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      const manager = queryRunner.manager;
+      const result = await manager.find(CreatorEditorMap, {
+        where: { creatorId },
+      });
+      await queryRunner.commitTransaction();
+      return result
+        ? result.map((creatorEditorMap) =>
+            this.toCreatorEditorMapDomain(creatorEditorMap),
+          )
+        : [];
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
+  }
+
+  async findByEditorId(editorId: string): Promise<ICreatorEditorMap[]> {
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      const manager = queryRunner.manager;
+      const result = await manager.find(CreatorEditorMap, {
+        where: { editorId },
+      });
+      await queryRunner.commitTransaction();
+      return result
+        ? result.map((creatorEditorMap) =>
+            this.toCreatorEditorMapDomain(creatorEditorMap),
+          )
+        : [];
     } catch (error) {
       await queryRunner.rollbackTransaction();
       throw error;
@@ -52,33 +101,16 @@ export class MediaRepositoryAdapter implements IMediaPort {
   }
 
   async save(
-    media: Partial<IMedia>,
-    file: Express.Multer.File,
-  ): Promise<IMedia> {
+    creatorEditorMap: Partial<ICreatorEditorMap>,
+  ): Promise<ICreatorEditorMap> {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
     try {
       const manager = queryRunner.manager;
-      // save to s3
-      const fileName =
-        new Date().toISOString() +
-        file.originalname +
-        randomUUID() +
-        '.' +
-        file.mimetype.split('/')[1];
-      const s3result = await this.s3Service.uploadFile({
-        file,
-        bucketName: this.configService.getOrThrow('AWS_S3_BUCKET_NAME'),
-        folder: this.configService.getOrThrow('AWS_S3_FOLDER_NAME'),
-        fileName,
-      });
-      media.integrationUrl = s3result.url;
-      media.integrationKey = s3result.key;
-      // save to db
-      const result = await manager.save(Media, media);
+      const result = await manager.save(CreatorEditorMap, creatorEditorMap);
       await queryRunner.commitTransaction();
-      return this.toDomain(result);
+      return this.toCreatorEditorMapDomain(result);
     } catch (error) {
       await queryRunner.rollbackTransaction();
       throw error;
@@ -87,18 +119,23 @@ export class MediaRepositoryAdapter implements IMediaPort {
     }
   }
 
-  async update(id: string, media: Partial<IMedia>): Promise<IMedia | null> {
+  async update(
+    id: string,
+    creatorEditorMap: Partial<ICreatorEditorMap>,
+  ): Promise<ICreatorEditorMap | null> {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
     try {
       const manager = queryRunner.manager;
-      await manager.update(Media, id, media);
+      await manager.update(CreatorEditorMap, id, creatorEditorMap);
       await queryRunner.commitTransaction();
-      const updatedResult = await manager.findOne(Media, {
+      const updatedResult = await manager.findOne(CreatorEditorMap, {
         where: { id },
       });
-      return updatedResult ? this.toDomain(updatedResult) : null;
+      return updatedResult
+        ? this.toCreatorEditorMapDomain(updatedResult)
+        : null;
     } catch (error) {
       await queryRunner.rollbackTransaction();
       throw error;
@@ -113,19 +150,13 @@ export class MediaRepositoryAdapter implements IMediaPort {
     await queryRunner.startTransaction();
     try {
       const manager = queryRunner.manager;
-      const media = await manager.findOne(Media, {
+      const creatorEditorMap = await manager.findOne(CreatorEditorMap, {
         where: { id },
       });
-      if (!media) {
-        throw new NotFoundException('Media not found');
+      if (!creatorEditorMap) {
+        throw new NotFoundException('CreatorEditorMap not found');
       }
-      if (media.integrationKey) {
-        await this.s3Service.deleteFile(
-          media.integrationKey,
-          this.configService.getOrThrow('AWS_S3_BUCKET_NAME'),
-        );
-      }
-      await manager.delete(Media, id);
+      await manager.delete(CreatorEditorMap, id);
       await queryRunner.commitTransaction();
     } catch (error) {
       await queryRunner.rollbackTransaction();
@@ -135,29 +166,212 @@ export class MediaRepositoryAdapter implements IMediaPort {
     }
   }
 
-  toDomain(media: Media): IMedia {
+  toCreatorEditorMapDomain(
+    creatorEditorMap: CreatorEditorMap,
+  ): ICreatorEditorMap {
     return {
-      id: media.id,
-      userId: media.userId,
-      accountId: media.accountId,
-      type: media.type,
-      integrationUrl: media.integrationUrl ? media.integrationUrl : null,
-      integrationKey: media.integrationKey ? media.integrationKey : null,
-      createdAt: media.createdAt,
-      updatedAt: media.updatedAt,
+      id: creatorEditorMap.id,
+      creatorId: creatorEditorMap.creatorId,
+      editorId: creatorEditorMap.editorId,
+      status: creatorEditorMap.status,
+      createdAt: creatorEditorMap.createdAt,
+      updatedAt: creatorEditorMap.updatedAt,
     };
   }
 
-  toEntity(media: IMedia): Media {
+  toCreatorEditorMapEntity(
+    creatorEditorMap: ICreatorEditorMap,
+  ): CreatorEditorMap {
     return {
-      id: media.id,
-      userId: media.userId,
-      accountId: media.accountId,
-      type: media.type,
-      integrationUrl: media.integrationUrl ? media.integrationUrl : null,
-      integrationKey: media.integrationKey ? media.integrationKey : null,
-      createdAt: media.createdAt || new Date(),
-      updatedAt: media.updatedAt || new Date(),
+      id: creatorEditorMap.id,
+      creatorId: creatorEditorMap.creatorId,
+      editorId: creatorEditorMap.editorId,
+      status: creatorEditorMap.status,
+      createdAt: creatorEditorMap.createdAt || new Date(),
+      updatedAt: creatorEditorMap.updatedAt || new Date(),
+    };
+  }
+}
+
+@Injectable()
+export class AccountEditorMapRepositoryAdapter
+  implements IAccountEditorMapPort
+{
+  constructor(private readonly dataSource: DataSource) {}
+
+  async findAll(): Promise<IAccountEditorMap[]> {
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      const manager = queryRunner.manager;
+      const result = await manager.find(AccountEditorMap);
+      await queryRunner.commitTransaction();
+      return result.map((accountEditorMap) =>
+        this.toAccountEditorMapDomain(accountEditorMap),
+      );
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
+  }
+
+  async findById(id: string): Promise<IAccountEditorMap | null> {
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      const manager = queryRunner.manager;
+      const result = await manager.findOne(AccountEditorMap, {
+        where: { id },
+      });
+      await queryRunner.commitTransaction();
+      return result ? this.toAccountEditorMapDomain(result) : null;
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
+  }
+
+  async findByAccountId(accountId: string): Promise<IAccountEditorMap[]> {
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      const manager = queryRunner.manager;
+      const result = await manager.find(AccountEditorMap, {
+        where: { accountId },
+      });
+      await queryRunner.commitTransaction();
+      return result
+        ? result.map((accountEditorMap) =>
+            this.toAccountEditorMapDomain(accountEditorMap),
+          )
+        : [];
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
+  }
+
+  async findByEditorId(editorId: string): Promise<IAccountEditorMap[]> {
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      const manager = queryRunner.manager;
+      const result = await manager.find(AccountEditorMap, {
+        where: { editorId },
+      });
+      await queryRunner.commitTransaction();
+      return result
+        ? result.map((accountEditorMap) =>
+            this.toAccountEditorMapDomain(accountEditorMap),
+          )
+        : [];
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
+  }
+
+  async save(
+    accountEditorMap: Partial<IAccountEditorMap>,
+  ): Promise<IAccountEditorMap> {
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      const manager = queryRunner.manager;
+      const result = await manager.save(AccountEditorMap, accountEditorMap);
+      await queryRunner.commitTransaction();
+      return this.toAccountEditorMapDomain(result);
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
+  }
+
+  async update(
+    id: string,
+    accountEditorMap: Partial<IAccountEditorMap>,
+  ): Promise<IAccountEditorMap | null> {
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      const manager = queryRunner.manager;
+      await manager.update(AccountEditorMap, id, accountEditorMap);
+      await queryRunner.commitTransaction();
+      const updatedResult = await manager.findOne(AccountEditorMap, {
+        where: { id },
+      });
+      return updatedResult
+        ? this.toAccountEditorMapDomain(updatedResult)
+        : null;
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
+  }
+
+  async delete(id: string): Promise<void> {
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      const manager = queryRunner.manager;
+      const accountEditorMap = await manager.findOne(AccountEditorMap, {
+        where: { id },
+      });
+      if (!accountEditorMap) {
+        throw new NotFoundException('AccountEditorMap not found');
+      }
+      await manager.delete(AccountEditorMap, id);
+      await queryRunner.commitTransaction();
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
+  }
+
+  toAccountEditorMapDomain(
+    accountEditorMap: AccountEditorMap,
+  ): IAccountEditorMap {
+    return {
+      id: accountEditorMap.id,
+      accountId: accountEditorMap.accountId,
+      editorId: accountEditorMap.editorId,
+      status: accountEditorMap.status,
+      createdAt: accountEditorMap.createdAt,
+      updatedAt: accountEditorMap.updatedAt,
+    };
+  }
+
+  toAccountEditorMapEntity(
+    accountEditorMap: IAccountEditorMap,
+  ): AccountEditorMap {
+    return {
+      id: accountEditorMap.id,
+      accountId: accountEditorMap.accountId,
+      editorId: accountEditorMap.editorId,
+      status: accountEditorMap.status,
+      createdAt: accountEditorMap.createdAt || new Date(),
+      updatedAt: accountEditorMap.updatedAt || new Date(),
     };
   }
 }

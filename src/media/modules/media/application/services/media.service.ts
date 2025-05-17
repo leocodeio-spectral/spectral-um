@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { IMedia } from '../../domain/models/media.port';
+import { IMedia } from '../../domain/models/media.model';
 import { IMediaPort } from '../../domain/ports/media.port';
 
 @Injectable()

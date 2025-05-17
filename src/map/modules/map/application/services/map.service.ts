@@ -1,28 +1,59 @@
 import { Injectable } from '@nestjs/common';
-import { IMedia } from '../../domain/models/media.port';
-import { IMediaPort } from '../../domain/ports/media.port';
+
+// creator editor
+import { ICreatorEditorMap } from '../../domain/models/creator-editor-map.model';
+import { ICreatorEditorMapPort } from '../../domain/ports/creator-editor-map.port';
+
+// account editor
+import { IAccountEditorMap } from '../../domain/models/account-editor-map.model';
+import { IAccountEditorMapPort } from '../../domain/ports/account-editor-map.port';
 
 @Injectable()
-export class MediaService {
-  constructor(private readonly mediaPort: IMediaPort) {}
+export class CreatorEditorMapService {
+  constructor(private readonly creatorEditorMapPort: ICreatorEditorMapPort) {}
 
-  findAll(): Promise<IMedia[]> {
-    return this.mediaPort.findAll();
+  findAll(): Promise<ICreatorEditorMap[]> {
+    return this.creatorEditorMapPort.findAll();
   }
 
-  findById(id: string): Promise<IMedia | null> {
-    return this.mediaPort.findById(id);
+  findById(id: string): Promise<ICreatorEditorMap | null> {
+    return this.creatorEditorMapPort.findById(id);
   }
 
-  create(media: Partial<IMedia>, file: Express.Multer.File): Promise<IMedia> {
-    return this.mediaPort.save(media, file);
+  create(creatorEditorMap: Partial<ICreatorEditorMap>): Promise<ICreatorEditorMap> {
+    return this.creatorEditorMapPort.save(creatorEditorMap);
   }
 
-  update(id: string, media: Partial<IMedia>): Promise<IMedia | null> {
-    return this.mediaPort.update(id, media);
+  update(id: string, creatorEditorMap: Partial<ICreatorEditorMap>): Promise<ICreatorEditorMap | null> {
+    return this.creatorEditorMapPort.update(id, creatorEditorMap);
   }
 
   delete(id: string): Promise<void> {
-    return this.mediaPort.delete(id);
+    return this.creatorEditorMapPort.delete(id);
+  }
+}
+
+@Injectable()
+export class AccountEditorMapService {
+  constructor(private readonly accountEditorMapPort: IAccountEditorMapPort) {}
+
+  findAll(): Promise<IAccountEditorMap[]> {
+    return this.accountEditorMapPort.findAll();
+  }
+
+  findById(id: string): Promise<IAccountEditorMap | null> {
+    return this.accountEditorMapPort.findById(id);
+  }
+
+  create(accountEditorMap: Partial<IAccountEditorMap>): Promise<IAccountEditorMap> {
+    return this.accountEditorMapPort.save(accountEditorMap);
+  }
+
+  update(id: string, accountEditorMap: Partial<IAccountEditorMap>): Promise<IAccountEditorMap | null> {
+    return this.accountEditorMapPort.update(id, accountEditorMap);
+  }
+
+  delete(id: string): Promise<void> {
+    return this.accountEditorMapPort.delete(id);
   }
 }
