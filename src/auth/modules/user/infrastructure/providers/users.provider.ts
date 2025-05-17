@@ -9,7 +9,7 @@ import {
   CREATOR_REPOSITORY,
   EDITOR_PREFERENCES_REPOSITORY,
   EDITOR_REPOSITORY,
-} from 'src/auth/utils/services/constants';
+} from 'src/auth/libs/services/constants';
 
 export const creatorsProvider = [
   {

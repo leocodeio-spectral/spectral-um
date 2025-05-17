@@ -7,7 +7,7 @@ import {
   LoggerService,
 } from '@leocodeio-njs/njs-logging';
 import { IOtpPort } from '../../domain/ports/otp.port';
-import { RateLimiterService } from 'src/auth/utils/services/rate-limiter.service';
+import { RateLimiterService } from 'src/auth/libs/services/rate-limiter.service';
 
 @Injectable()
 export class MobileVerificationService {

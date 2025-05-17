@@ -11,7 +11,7 @@ import * as crypto from 'crypto';
 import { RateLimiterMemory } from 'rate-limiter-flexible';
 import { SessionManagementService } from './session-management.service';
 import { CorrelationService, LoggerService } from '@leocodeio-njs/njs-logging';
-import { TokenPayload } from 'src/auth/utils/types/token';
+import { TokenPayload } from 'src/auth/libs/types/token';
 import {
   ICreatorPort,
   IEditorPort,
@@ -20,7 +20,10 @@ import {
   CreatorAuthPolicyService,
   EditorAuthPolicyService,
 } from 'src/auth/modules/user/application/services/auth-policy.service';
-import { ICreator, IEditor } from 'src/auth/modules/user/domain/models/user.model';
+import {
+  ICreator,
+  IEditor,
+} from 'src/auth/modules/user/domain/models/user.model';
 
 interface RefreshTokenPayload {
   sub: string;

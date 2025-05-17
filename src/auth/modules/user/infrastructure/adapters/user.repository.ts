@@ -9,7 +9,7 @@ import { AccessLevel } from '../../domain/enums/access-level.enum';
 import {
   CREATOR_REPOSITORY,
   EDITOR_REPOSITORY,
-} from 'src/auth/utils/services/constants';
+} from 'src/auth/libs/services/constants';
 
 @Injectable()
 export class CreatorRepositoryAdapter implements ICreatorPort {

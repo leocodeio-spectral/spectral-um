@@ -34,6 +34,8 @@ import {
 } from './auth/modules/otp/otp.module';
 import { S3Module } from './media/libs/s3/s3.module';
 import { MediaModule } from './media/modules/media/media.module';
+import { YtAuthModule } from './yt_int/modules/youtube/yt-auth.module';
+import { YtCreatorModule } from './yt_int/modules/creator/yt-creator.module';
 
 @Module({
   imports: [
@@ -159,6 +161,11 @@ import { MediaModule } from './media/modules/media/media.module';
     // media
     S3Module,
     MediaModule,
+
+    // yt
+    YtAuthModule,
+    YtCreatorModule,
+
     JwtModule.registerAsync({
       global: true,
       imports: [ConfigModule],

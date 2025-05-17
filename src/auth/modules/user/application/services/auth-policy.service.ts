@@ -7,7 +7,7 @@ import {
 import {
   CREATOR_REPOSITORY,
   EDITOR_REPOSITORY,
-} from 'src/auth/utils/services/constants';
+} from 'src/auth/libs/services/constants';
 import { Repository } from 'typeorm';
 import { Creator, Editor } from '../../infrastructure/entities/user.entity';
 import { ICreator, IEditor } from '../../domain/models/user.model';

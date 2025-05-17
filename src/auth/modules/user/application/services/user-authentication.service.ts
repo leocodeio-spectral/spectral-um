@@ -14,7 +14,7 @@ import {
 import { CorrelationService, LoggerService } from '@leocodeio-njs/njs-logging';
 import { IEditorPort, ICreatorPort } from '../../domain/ports/user.port';
 import { SessionManagementService } from 'src/auth/modules/session/application/services/session-management.service';
-import { RateLimiterService } from 'src/auth/utils/services/rate-limiter.service';
+import { RateLimiterService } from 'src/auth/libs/services/rate-limiter.service';
 import { ICreator, IEditor } from '../../domain/models/user.model';
 import { DeviceInfoDto, LoginDto } from '../dtos/login.dto';
 import {

@@ -14,7 +14,7 @@ import { IsEmailValidDto } from '../../application/dtos/is-email-valid.dto';
 import { ExistsPhoneDto } from '../../application/dtos/exists-phone.dto';
 import { ExistsEmailDto } from '../../application/dtos/exists-email.dto';
 import { ApiOperation, ApiSecurity } from '@nestjs/swagger';
-import { AuthExceptionFilter } from 'src/auth/utils/filters/auth-exceptions.filter';
+import { AuthExceptionFilter } from 'src/auth/libs/filters/auth-exceptions.filter';
 import { ValidateTokenDto } from '../../application/dtos/validate-token.dto';
 import { Request } from 'express';
 import {

@@ -9,7 +9,7 @@ import {
 import * as nodemailer from 'nodemailer';
 import { generateToken, verifyToken } from 'authenticator';
 import { OtpService } from './otp.service';
-import { RateLimiterService } from 'src/auth/utils/services/rate-limiter.service';
+import { RateLimiterService } from 'src/auth/libs/services/rate-limiter.service';
 import { IOtpPort } from '../../domain/ports/otp.port';
 import e from 'express';
 

@@ -3,6 +3,9 @@
 /node_modules
 /build
 .npmrc
+secrets
+
+*.mp4
 
 # Logs
 logs

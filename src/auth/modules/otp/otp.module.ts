@@ -35,7 +35,7 @@ import {
   CreatorTwoFactorAuthService,
   EditorTwoFactorAuthService,
 } from 'src/auth/modules/user/application/services/two-factor-auth.service';
-import { RateLimiterService } from 'src/auth/utils/services/rate-limiter.service';
+import { RateLimiterService } from 'src/auth/libs/services/rate-limiter.service';
 import {
   CreatorAuthPolicyService,
   EditorAuthPolicyService,

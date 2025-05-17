@@ -15,7 +15,7 @@ import {
 import {
   CREATOR_PREFERENCES_REPOSITORY,
   EDITOR_PREFERENCES_REPOSITORY,
-} from 'src/auth/utils/services/constants';
+} from 'src/auth/libs/services/constants';
 
 @Injectable()
 export class CreatorPreferencesRepositoryAdapter

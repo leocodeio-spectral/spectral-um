@@ -1,3 +1,37 @@
+## [1.5.1](https://github.com/leocodeio-spectral/spectral-um/compare/v1.5.0...v1.5.1) (2025-05-17)
+
+
+### Performance Improvements
+
+* **naming convention:** naming convention ([884a5c7](https://github.com/leocodeio-spectral/spectral-um/commit/884a5c7b6ff6157324598ccaaa17481a1b11cfe0))
+* **rm secret:** rm secret ([c4bda01](https://github.com/leocodeio-spectral/spectral-um/commit/c4bda0100582c392f0388025489e1ce31da3e3d5))
+* **updated codebase yt auth too:** updated codebase yt auth too ([dbed69b](https://github.com/leocodeio-spectral/spectral-um/commit/dbed69b3422eab067ab8dd8ae1601780043dff8d))
+* **updated flows:** updated flows ([4e3a2e9](https://github.com/leocodeio-spectral/spectral-um/commit/4e3a2e9ab960d4a7aa3eee726506283ee269cebb))
+
+## [1.5.1](https://github.com/leocodeio-spectral/spectral-um/compare/v1.5.0...v1.5.1) (2025-05-17)
+
+
+### Performance Improvements
+
+* **naming convention:** naming convention ([884a5c7](https://github.com/leocodeio-spectral/spectral-um/commit/884a5c7b6ff6157324598ccaaa17481a1b11cfe0))
+* **updated codebase yt auth too:** updated codebase yt auth too ([dbed69b](https://github.com/leocodeio-spectral/spectral-um/commit/dbed69b3422eab067ab8dd8ae1601780043dff8d))
+* **updated flows:** updated flows ([4e3a2e9](https://github.com/leocodeio-spectral/spectral-um/commit/4e3a2e9ab960d4a7aa3eee726506283ee269cebb))
+
+## [1.5.1](https://github.com/leocodeio-spectral/spectral-um/compare/v1.5.0...v1.5.1) (2025-05-17)
+
+
+### Performance Improvements
+
+* **naming convention:** naming convention ([884a5c7](https://github.com/leocodeio-spectral/spectral-um/commit/884a5c7b6ff6157324598ccaaa17481a1b11cfe0))
+* **updated codebase yt auth too:** updated codebase yt auth too ([dbed69b](https://github.com/leocodeio-spectral/spectral-um/commit/dbed69b3422eab067ab8dd8ae1601780043dff8d))
+
+## [1.5.1](https://github.com/leocodeio-spectral/spectral-um/compare/v1.5.0...v1.5.1) (2025-05-16)
+
+
+### Performance Improvements
+
+* **updated codebase yt auth too:** updated codebase yt auth too ([dbed69b](https://github.com/leocodeio-spectral/spectral-um/commit/dbed69b3422eab067ab8dd8ae1601780043dff8d))
+
 # [1.5.0](https://github.com/leocodeio-spectral/spectral-um/compare/v1.4.0...v1.5.0) (2025-05-16)
 
 
