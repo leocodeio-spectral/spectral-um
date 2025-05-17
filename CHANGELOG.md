@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/leocodeio-spectral/spectral-um/compare/v1.6.0...v1.7.0) (2025-05-17)
+
+
+### Features
+
+* **added map module:** added map module ([73b209f](https://github.com/leocodeio-spectral/spectral-um/commit/73b209f27a4dc6cebae3a0c8f396fb7c55024e13))
+
 # [1.6.0](https://github.com/leocodeio-spectral/spectral-um/compare/v1.5.0...v1.6.0) (2025-05-17)
 
 
