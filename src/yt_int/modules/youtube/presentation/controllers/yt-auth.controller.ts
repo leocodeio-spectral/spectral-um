@@ -8,9 +8,10 @@ import {
   Body,
 } from '@nestjs/common';
 import { YtAuthService } from '../../application/services/yt-auth.service';
-import { ApiSecurity, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { Public } from '@leocodeio-njs/njs-auth';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { slugCallbackDataDto } from '../../application/dtos/callback-slug.dto';
 
 @ApiTags('Youtube')
 @ApiSecurity('x-api-key')
@@ -24,10 +25,11 @@ export class YtAuthController {
     return this.ytAuthService.getAuthUrl();
   }
 
-  @Public()
-  @Get('oauth2callback')
-  async handleOAuthCallback(@Query('code') code: string) {
-    const creatorId = await this.ytAuthService.handleOAuthCallback(code);
+  @Post('oauth2callback')
+  @ApiBody({ type: slugCallbackDataDto })
+  async handleOAuthCallback(@Body() slugCallbackData: slugCallbackDataDto) {
+    const creatorId =
+      await this.ytAuthService.handleOAuthCallback(slugCallbackData);
     return creatorId;
   }
 

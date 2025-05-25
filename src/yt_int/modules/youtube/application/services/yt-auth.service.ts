@@ -16,6 +16,7 @@ import { YtCreatorService } from '../../../creator/application/services/yt-creat
 import { Readable } from 'stream';
 import { UpdateEntryDto } from '../../../creator/application/dtos/update-entry.dto';
 import { randomUUID } from 'node:crypto';
+import { slugCallbackDataDto } from '../dtos/callback-slug.dto';
 
 @Injectable()
 export class YtAuthService {
@@ -25,9 +26,11 @@ export class YtAuthService {
   private readonly SCOPES = [
     'https://www.googleapis.com/auth/youtube.readonly',
     'https://www.googleapis.com/auth/youtube.upload',
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile',
   ];
   private readonly REDIRECT_URI =
-    'http://localhost:3001/v1.0/youtube/api/oauth2callback';
+    'http://localhost:5173/feature/accounts/callback';
   private oauth2Client;
 
   constructor(
@@ -66,17 +69,55 @@ export class YtAuthService {
     }
   }
 
-  async handleOAuthCallback(code: string): Promise<string> {
+  async getUserEmail(accessToken: string): Promise<string> {
+    try {
+      // Set up OAuth2 client with the access token
+      this.oauth2Client.setCredentials({ access_token: accessToken });
+
+      // Create people API client
+      const people = google.people({ version: 'v1', auth: this.oauth2Client });
+
+      // Fetch user's email
+      const response = await people.people.get({
+        resourceName: 'people/me',
+        personFields: 'emailAddresses',
+      });
+
+      if (
+        !response.data.emailAddresses ||
+        response.data.emailAddresses.length === 0
+      ) {
+        this.logger.error('No email addresses found in the user profile');
+        throw new NotFoundException('No email address found for the user');
+      }
+
+      const userEmail = response.data.emailAddresses[0].value;
+      this.logger.log('Retrieved user email:', userEmail);
+      if (!userEmail) {
+        this.logger.error('User email is empty');
+        throw new NotFoundException('User email is empty');
+      }
+      return userEmail;
+    } catch (error) {
+      this.logger.error('Failed to retrieve user email:', error);
+      throw new InternalServerErrorException('Failed to retrieve user email');
+    }
+  }
+
+  async handleOAuthCallback(
+    slugCallbackData: slugCallbackDataDto,
+  ): Promise<string> {
     try {
       this.logger.log(
         'debug log 15 - at ' +
           __filename.split('/').pop() +
           ' - Received OAuth code:',
-        code,
+        slugCallbackData,
       );
       let tokens: any;
       try {
-        tokens = (await this.oauth2Client.getToken(code)).tokens;
+        tokens = (await this.oauth2Client.getToken(slugCallbackData.code))
+          .tokens;
       } catch (error) {
         this.logger.error('Error getting tokens:', error);
         throw new InternalServerErrorException(
@@ -94,13 +135,14 @@ export class YtAuthService {
         throw new UnauthorizedException('Invalid tokens');
       }
 
-      // Save credentials to database
+      // Get user email using access token
+      const userEmail = await this.getUserEmail(tokens.access_token);
 
+      // Save credentials to database
       try {
         const creatorDto: CreateEntryDto = {
-          // creatorId: '11111111-1111-1111-1111-111111111111',
-          creatorId: randomUUID(),
-          email: 'test@test.com',
+          creatorId: slugCallbackData.creatorId,
+          email: userEmail,
           accessToken: tokens.access_token,
           refreshToken: tokens.refresh_token,
           status: YtCreatorStatus.active,
