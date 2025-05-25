@@ -14,10 +14,10 @@ export class YtCreatorEntity {
   @Generated('uuid')
   id: string;
 
-  @Column({ name: 'creator_id', type: 'uuid', unique: true })
+  @Column({ name: 'creator_id', type: 'uuid'})
   creatorId: string;
 
-  @Column({ name: 'email', type: 'text', unique: true })
+  @Column({ name: 'email', type: 'text' })
   email: string;
 
   @Column({ name: 'access_token', type: 'text', unique: true })

@@ -13,8 +13,11 @@ export class YtCreatorRepository implements IYtCreatorRepository {
     private readonly ytCreatorRepository: Repository<YtCreatorEntity>,
   ) {}
 
-  async find(query: GetCreatorEntryModel): Promise<YtCreatorEntity[]> {
-    return this.ytCreatorRepository.find({ where: query });
+  async find(
+    query: GetCreatorEntryModel,
+  ): Promise<Partial<IYtCreatorEntity>[]> {
+    const creators = await this.ytCreatorRepository.find({ where: query });
+    return creators.map((creator) => this.toDomain(creator));
   }
 
   async save(creator: IYtCreatorEntity): Promise<IYtCreatorEntity> {
@@ -31,5 +34,14 @@ export class YtCreatorRepository implements IYtCreatorRepository {
 
   async findById(id: string): Promise<YtCreatorEntity | null> {
     return this.ytCreatorRepository.findOneBy({ id });
+  }
+
+  toDomain(creator: YtCreatorEntity): Partial<IYtCreatorEntity> {
+    return {
+      id: creator.id,
+      creatorId: creator.creatorId,
+      status: creator.status,
+      email: creator.email,
+    };
   }
 }

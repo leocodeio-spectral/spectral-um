@@ -56,7 +56,7 @@ export class YtCreatorService {
   // [TODO] - Make both of this function to be one
   async getCreatorEntries(
     query: GetCreatorEntryModel,
-  ): Promise<IYtCreatorEntity[]> {
+  ): Promise<Partial<IYtCreatorEntity>[]> {
     try {
       this.logger.log(
         'debug log 4 - at ' +

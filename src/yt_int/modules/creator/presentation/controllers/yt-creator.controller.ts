@@ -46,7 +46,7 @@ export class YtCreatorController {
   async getCreatorEntries(
     @Query('creatorId') creatorId?: string,
     @Query('status') status?: YtCreatorStatus,
-  ): Promise<IYtCreatorEntity[] | IYtCreatorEntity> {
+  ): Promise<Partial<IYtCreatorEntity>[]> {
     const query: GetCreatorEntryModel = {
       creatorId,
       status,
