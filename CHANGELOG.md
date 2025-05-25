@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/leocodeio-spectral/spectral-um/compare/v1.8.0...v1.9.0) (2025-05-25)
+
+
+### Features
+
+* **end-to-end link unline:** end-to-end link unlink ([87b7e15](https://github.com/leocodeio-spectral/spectral-um/commit/87b7e15a9023e39af53b9cfdd20c89f5e967e188))
+
 # [1.8.0](https://github.com/leocodeio-spectral/spectral-um/compare/v1.7.0...v1.8.0) (2025-05-25)
 
 
