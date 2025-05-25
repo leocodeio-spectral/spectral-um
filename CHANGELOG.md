@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/leocodeio-spectral/spectral-um/compare/v1.7.0...v1.8.0) (2025-05-25)
+
+
+### Features
+
+* **link acc through frontend:** link acc through frontend ([1f59830](https://github.com/leocodeio-spectral/spectral-um/commit/1f59830018c911015f568d0cb75a77284285913b))
+
 # [1.7.0](https://github.com/leocodeio-spectral/spectral-um/compare/v1.6.0...v1.7.0) (2025-05-17)
 
 
