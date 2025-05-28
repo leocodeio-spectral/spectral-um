@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/leocodeio-spectral/spectral-um/compare/v1.9.0...v1.10.0) (2025-05-28)
+
+
+### Features
+
+* **creator editor connect:** creator editor connect ([51220f6](https://github.com/leocodeio-spectral/spectral-um/commit/51220f663b5c5d2a6c9a43b0c05a3ee637961f7f))
+
 # [1.9.0](https://github.com/leocodeio-spectral/spectral-um/compare/v1.8.0...v1.9.0) (2025-05-25)
 
 
