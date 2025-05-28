@@ -9,6 +9,12 @@ import { CreatorEditorMap } from '../entities/creator-editor-map.entity';
 import { IAccountEditorMap } from '../../domain/models/account-editor-map.model';
 import { IAccountEditorMapPort } from '../../domain/ports/account-editor-map.port';
 import { AccountEditorMap } from '../entities/account-editor-map.entity';
+import {
+  Creator,
+  Editor,
+} from 'src/auth/modules/user/infrastructure/entities/user.entity';
+import { CreatorEditorMapStatus } from '../../domain/enums/creator-editor-map-status.enum';
+import { CreatorEditorFindDto } from '../../application/dtos/find-creator-editor.dto';
 
 @Injectable()
 export class CreatorEditorMapRepositoryAdapter
@@ -54,7 +60,67 @@ export class CreatorEditorMapRepositoryAdapter
     }
   }
 
-  async findByCreatorId(creatorId: string): Promise<ICreatorEditorMap[]> {
+  //
+  async findByCreatorIdAndEditorId(
+    creatorId: string,
+    editorMail: string,
+  ): Promise<CreatorEditorFindDto | null> {
+    console.log(0);
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      const manager = queryRunner.manager;
+      const editorExists = await manager.findOne(Editor, {
+        where: { email: editorMail },
+      });
+      if (!editorExists) {
+        throw new NotFoundException('Editor not found');
+      }
+      console.log(1);
+      const result = await manager.findOne(CreatorEditorMap, {
+        where: { creatorId, editorId: editorExists.id },
+      });
+      console.log(2);
+      if (result) {
+        return {
+          creatorId,
+          editorId: editorExists.id,
+          editorMail,
+          editorName: editorExists.firstName + ' ' + editorExists.lastName,
+          editorAvatar: editorExists.profilePicUrl || '',
+          status: result.status,
+        };
+      }
+      console.log(3);
+      const creatorExists = await manager.findOne(Creator, {
+        where: { id: creatorId },
+      });
+      if (!creatorExists) {
+        throw new NotFoundException('Creator not found');
+      }
+      console.log(4);
+      const creatorEditorMap: CreatorEditorFindDto = {
+        creatorId,
+        editorId: editorExists.id,
+        editorMail,
+        editorName: editorExists.firstName + ' ' + editorExists.lastName,
+        editorAvatar: editorExists.profilePicUrl || '',
+        status: CreatorEditorMapStatus.INACTIVE,
+      };
+      console.log(5);
+      await queryRunner.commitTransaction();
+      return creatorEditorMap;
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
+  }
+
+  //
+  async findMapsByCreatorId(creatorId: string): Promise<ICreatorEditorMap[]> {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
@@ -92,6 +158,31 @@ export class CreatorEditorMapRepositoryAdapter
             this.toCreatorEditorMapDomain(creatorEditorMap),
           )
         : [];
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
+  }
+
+  //
+  async requestEditor(
+    creatorId: string,
+    editorId: string,
+  ): Promise<ICreatorEditorMap> {
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      const manager = queryRunner.manager;
+      const result = await manager.save(CreatorEditorMap, {
+        creatorId,
+        editorId,
+        status: CreatorEditorMapStatus.PENDING,
+      });
+      await queryRunner.commitTransaction();
+      return this.toCreatorEditorMapDomain(result);
     } catch (error) {
       await queryRunner.rollbackTransaction();
       throw error;

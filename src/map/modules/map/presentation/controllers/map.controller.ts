@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 // creator editor
 import { CreatorEditorMapService } from '../../application/services/map.service';
@@ -31,6 +32,30 @@ export class CreatorEditorMapController {
   @Get(':id')
   async findById(@Param('id') id: string) {
     return this.creatorEditorMapService.findById(id);
+  }
+
+  //
+  @Get('find-map/:creatorId/:editorMail')
+  async findMap(
+    @Param('creatorId') creatorId: string,
+    @Param('editorMail') editorMail: string,
+  ) {
+    return this.creatorEditorMapService.findMap(creatorId, editorMail);
+  }
+
+  //
+  @Get('find-maps-by-creator/:creatorId')
+  async findMapsByCreatorId(@Param('creatorId') creatorId: string) {
+    return this.creatorEditorMapService.findMapsByCreatorId(creatorId);
+  }
+
+  //
+  @Post('request-editor/:creatorId/:editorId')
+  async requestEditor(
+    @Param('creatorId') creatorId: string,
+    @Param('editorId') editorId: string,
+  ) {
+    return this.creatorEditorMapService.requestEditor(creatorId, editorId);
   }
 
   @Post()
